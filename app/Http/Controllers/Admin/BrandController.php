@@ -40,7 +40,7 @@ class BrandController extends Controller
        $brands->save();
 
     //    dd($brands->all());
-       return redirect('admin/brand/list')->with('success',"Category Successfully Created");
+       return redirect('admin/brand/list')->with('success',"Brand Successfully Created");
     }
 
     public function edit($id)
@@ -68,14 +68,14 @@ class BrandController extends Controller
       $brands->save();
 
    //    dd($brands->all());
-      return redirect('admin/brand/list')->with('success',"Category Successfully Update");
+      return redirect('admin/brand/list')->with('success',"Brand Successfully Update");
    }
 
 
     public function delate($id)
     {
         Brand::destroy($id);
-        return redirect()->route('admin.brand.list')->with('success',"Sub Category Successfully Delete");
+        return redirect()->route('admin.brand.list')->with('success',"Brand Successfully Delete");
     }
 
 }

@@ -27,15 +27,15 @@
                   <div class="card-body">
 
                     <div class="form-group">
-                      <label> brand Name <span style="color: red">*</span></label>
-                      <input type="text" class="form-control"  value="{{ old('brand_name',$getRecord->brand_name) }}"  name="brand_name" placeholder="Enter Brand name">
+                      <label> Color Name <span style="color: red">*</span></label>
+                      <input type="text" class="form-control"  value="{{ old('color_name',$getRecord->color_name) }}"  name="color_name" placeholder="Enter Color name">
                     </div>
 
                     <div class="form-group">
-                      <label> brand slug <span style="color: red">*</span> </label>
-                      <input type="text" class="form-control"  value="{{ old('brand_slug',$getRecord->brand_slug) }}"  name="brand_slug" placeholder="Enter brand_slug">
-                      <div class="" style="color: red">{{ $errors->first('brand_slug') }}</div>
-                    </div>
+                        <label> Color Ccde <span style="color: red">*</span> </label>
+                        <input type="color" class="form-control"  value="{{ old('color_code',$getRecord->color_code) }}"  name="color_code" placeholder="Enter color_code">
+                       
+                      </div>
                     
                     <div class="form-group">
                       <label>Status <span style="color: red">*</span></label>
@@ -44,29 +44,6 @@
                          <option {{ (old('status',$getRecord->status) == 1) ? 'selected' : ''}} value="1">Inactive</option>
                       </select>
                     </div>
-
-                    <hr>
-                     <div class="form-group">
-                        <label> Meta Title <span style="color: red">*</span></label>
-                        <input type="text" class="form-control"  value="{{ old('meta_title',$getRecord->meta_title) }}"  name="meta_title" placeholder="Enter meta_title">
-                      </div>
-                     
-
-
-                      <div class="form-group">
-                        <label> Meta Description </label>
-                        <textarea class="form-control" name="meta_description" placeholder="Enter Meta Description ">
-                          {{ old('meta_description',  $getRecord->meta_description) }}
-                        </textarea>
-                      </div>
-
-                     <div class="form-group">
-                        <label> Meta Keywords</label>
-                        <input type="text" class="form-control"  value="{{ old('meta_keywords', 
-                        $getRecord->meta_keywords) }}"  name="meta_keywords" placeholder="Enter meta_keywords ">
-                      </div>
-
-
 
                   </div>
                   <!-- /.card-body -->

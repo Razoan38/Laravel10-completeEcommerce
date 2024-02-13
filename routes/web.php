@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\admin\ColorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,10 +63,17 @@ Route::group(['middleware' =>'admin'],function(){
     Route::post('admin/brand/edit/{id}',[BrandController::class,'update'])->name('brand.update');
     Route::get('admin/brand/delate/{id}',[BrandController::class,'delate'])->name('brand.delate');
 
+    //color
+    Route::get('admin/color/list',[ColorController::class,'list'])->name('admin.color.list');
+    Route::get('admin/color/add',[ColorController::class,'add'])->name('color.add');
+    Route::post('admin/color/add',[ColorController::class,'insert']);
+    Route::get('admin/color/edit/{id}',[ColorController::class,'edit'])->name('color.edit');
+    Route::post('admin/color/edit/{id}',[ColorController::class,'update'])->name('color.update');
+    Route::get('admin/color/delate/{id}',[ColorController::class,'delate'])->name('color.delate');
+
    // product
     Route::get('admin/product/list',[ProductController::class,'list'])->name('admin.product.list');
     Route::get('admin/product/add',[ProductController::class,'add'])->name('admin.product.add');
-
     Route::post('admin/product/add',[ProductController::class,'insert']);
     Route::get('admin/product/edit/{id}',[ProductController::class,'edit'])->name('admin.product.edit');
 

@@ -202,6 +202,16 @@
                 </p>
               </a>
           </li>
+            <li class="nav-item">
+              {{-- <a href="{{ url('admin/category/list') }}" class="nav-link @if(Request::segment(2) == 'product') active @endif"> --}}
+              <a href="{{ route('admin.color.list') }}" class="nav-link @if(Request::segment(2) == 'color') active @endif">
+                <i class="nav-icon fas  fa-list-alt"></i>
+                <p>
+                  Color 
+                 
+                </p>
+              </a>
+          </li>
 
             <li class="nav-item">
                 <a href="{{ route('admin.product.list') }}" class="nav-link @if(Request::segment(2) == 'product') active @endif">

@@ -12,8 +12,8 @@ class ProductController extends Controller
 {
     public function list()
     {
-        // $data['getRecord'] =SubCategories::getRecord();
-        return view('admin.product.list');
+        $data['getRecord'] =Product::getRecord();
+        return view('admin.product.list',$data);
     }
     public function add()
     {

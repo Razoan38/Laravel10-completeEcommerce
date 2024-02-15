@@ -12,7 +12,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Sub Category  List </h1>
+              <h1>Product List </h1>
             </div>
             <div class="col-sm-6" style="text-align: right">
               <a href="{{ route('admin.product.add') }}" class="btn btn-primary">Add New Sub Product </a>
@@ -40,13 +40,11 @@
                     <thead>
                       <tr>
                         <th >#</th>
-                        <th> Name</th>
-
-                        <th> slug</th>
-                     
+                        <th>Title</th>
+                        {{--<th>slug</th>
                         <th>Meta Title</th>
                         <th>Meta Description</th>
-                        <th>Meta Keywords</th>
+                        <th>Meta Keywords</th>--}}
                         <th>Created By</th>
                         <th>Status</th>
                         <th>Created Date</th>
@@ -55,12 +53,34 @@
                       </tr>
                     </thead>
                     <tbody>
-                
+                      @foreach ( $getRecord as $valu )
+                        
+                     
+                      <tr>
+                        <td>{{ $valu->id }}</td>
+                        <td>{{ $valu->title }}</td>
+          
+                        <td>{{ $valu->created_by_name }}</td>
+                        <td>{{ ($valu->status == 0 ) ? 'Active' : 'Inactive'}}</td>
+                        <td>{{ date('d-m-y', strtotime($valu->created_at))}}</td>
+                        <td>
+
+                          {{--Route difine this code  --}}
+                          <a href="{{ route('admin.product.edit',['id' => $valu->id ]) }}" class="btn btn-primary">Edit</a>
+                          <a href="{{ route('admin.product.delate',['id' => $valu->id ] ) }}" class="btn btn-danger">Delate</a>
+
+                      {{-- anader code  --}}
+                          {{-- <a href="{{ url('admin/admin/edit',$valu->id ) }}" class="btn btn-primary">Edit</a>
+                          <a href="{{ url('admin/admin/delate',$valu->id  ) }}" class="btn btn-danger">Delate</a> --}}
+                        </td>
+                    
+                      </tr>
+                      @endforeach
                     </tbody>
                   </table>
-                  {{-- <div class="" style="padding: 10px ; float: right;" >
+                  <div class="" style="padding: 10px ; float: right;" >
                    {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!} 
-                  </div> --}}
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </div>

@@ -1,7 +1,8 @@
 @extends('admin.layouts.app')
 
 @section('style')
-  
+   <!-- Theme style -->
+   <link rel="stylesheet" href="{{asset('/')}}public/admin/assets/plugins/summernote/summernote-bs4.min.css">
 @endsection
 
 @section('title')
@@ -160,7 +161,7 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label> Description <span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control editor"  value=""  name="description" placeholder="Enter  Description"></textarea>
+                          <textarea  class="form-control editor" id="mytextarea" value=""  name="description" placeholder="Enter  Description"></textarea>
                         </div>
                       </div>
                     </div>
@@ -217,22 +218,32 @@
 @endsection
 
 @section('script')
+{{-- <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script> --}}
+{{-- <script src="{{asset('/')}}public/admin/assets/tinymce/tinymce_jquery.min.js"></script> --}}
+{{-- <script src="{{asset('/')}}public/admin/assets/tinymce/tinymce_jquery.min.js"></script> --}}
 
-{{-- <script src="{{asset('/')}}public/admin/assets/tinymce/tinymce-jquery.min.js"></script> --}}
-<script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script>
 
+<script src="{{asset('/')}}public/admin/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+{{-- <script src="https:cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script> --}}
      <script type="text/javascript">
-     
-     $('.editor').tinymce({
-        height: 500,
-        menubar: false,
-        plugins: [
-           'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
-           'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-           'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
-        ],
-        toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help'
-      });
+
+       $('.editor').summernote({
+        height: 300,
+       });
+      
+    
+    //  tinymce.init({
+    //   selector:'.editor',
+    //     height: 500,
+    //     menubar: false,
+    //     plugins: [
+    //        'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+    //        'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+    //        'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+    //     ],
+    //     toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help'
+    //   });
 
       var i =1000;
          $('body').delegate('.AddSize','click',function(){
@@ -277,4 +288,6 @@
         });
      });
      </script>
+
+
 @endsection

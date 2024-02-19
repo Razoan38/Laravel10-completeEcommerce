@@ -38,7 +38,6 @@ Route::group(['middleware' =>'admin'],function(){
     Route::post('admin/admin/edit/{id}',[AdminController::class,'update'])->name('admin.update');
     Route::get('admin/admin/delate/{id}',[AdminController::class,'delate'])->name('admin.delate');
 
-
     // category
     Route::get('admin/category/list',[CategoryController::class,'list'])->name('admin.category.list');
     Route::get('admin/category/add',[CategoryController::class,'add'])->name('category.add');
@@ -54,6 +53,9 @@ Route::group(['middleware' =>'admin'],function(){
     Route::get('admin/sub_category/edit/{id}',[SubCategoryController::class,'edit'])->name('admin.sub_category.edit');
     Route::post('admin/sub_category/edit/{id}',[SubCategoryController::class,'update'])->name('admin.sub_category.update');
     Route::get('admin/sub_category/delate/{id}',[SubCategoryController::class,'delate'])->name('admin.sub_category.delate');
+
+    //ajax
+    Route::post('admin/get_sub_category',[SubCategoryController::class,'get_sub_category']);
 
     //brand
     Route::get('admin/brand/list',[BrandController::class,'list'])->name('admin.brand.list');
@@ -97,5 +99,5 @@ Route::get('/', function () {
 
 
 
-// 16 number video dakci error solution 
+// 19 number video dakci error solution 
 // 0 m pojunto 

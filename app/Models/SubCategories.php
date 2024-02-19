@@ -24,4 +24,14 @@ class SubCategories extends Model
             ->orderBy('sub_categories.id', 'desc')
             ->paginate(5);
     }
+    public static function getRecordSubCategory($category_id)
+    {
+        return self::select('sub_categories.*')
+            ->join('users', 'users.id', '=', 'sub_categories.created_by')
+            ->where('sub_categories.is_delete', '=', 0)
+            ->where('sub_categories.status', '=', 0)
+            ->where('sub_categories.category_id', '=', $category_id)
+            ->orderBy('sub_categories.subcategory_name', 'asc')
+            ->get();
+    }
 }

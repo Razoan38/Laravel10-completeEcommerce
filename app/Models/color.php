@@ -24,4 +24,14 @@ class color extends Model
         ->orderBy('colors.id','desc')
         ->get();
     }
+
+    static public function getRecordActive()
+    {
+        return self::select('colors.*')
+        ->join('users','users.id','=', 'colors.created_by')
+        ->where('colors.is_delete','=', 0)
+        ->where('colors.status','=', 0)
+        ->orderBy('colors.color_name','asc')
+        ->get();
+    }
 }

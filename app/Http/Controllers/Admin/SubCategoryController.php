@@ -83,5 +83,36 @@ class SubCategoryController extends Controller
         SubCategories::destroy($id);
          return redirect()->route('admin.sub_category.list')->with('success',"Sub Category Successfully Delete");
      }
- 
+     
+    //  public function get_sub_category(Request $request)
+    //  {
+    //      $category_id = $request->id;  
+    //      $get_sub_category = SubCategories::getRecordSubCategory($category_id);
+
+    //      $html ='';
+    //      $html ='<option value="">Select</option>';
+    //      foreach($get_sub_category as $value)
+    //      {
+    //         $html = '<option value="'.$value->id.'">'.$value->subcategory_name.'</option>';
+
+    //         $json['html'] = $html;
+    //         echo json_encode($json);
+    //      }
+    //   }
+
+          public function get_sub_category(Request $request)
+            {
+                $category_id = $request->id;  
+                $get_sub_category = SubCategories::getRecordSubCategory($category_id);
+
+                $html = '<option value="">Select</option>';
+
+                foreach ($get_sub_category as $value) {
+                    $html .= '<option value="' . $value->id . '">' . $value->subcategory_name . '</option>';
+                }
+
+                $json['html'] = $html;
+                echo json_encode($json);
+            }
+
 }

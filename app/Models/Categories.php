@@ -24,6 +24,15 @@ class Categories extends Model
         ->orderBy('categories.id','desc')
         ->get();
     }
+    static public function getRecordActive()
+    {
+        return self::select('categories.*', 'users.name as created_by_name')
+        ->join('users','users.id','=', 'categories.created_by')
+        ->where('categories.is_delete','=', 0)
+        ->where('categories.status','=', 0)
+        ->orderBy('categories.category_name','asc')
+        ->get();
+    }
 
    
     

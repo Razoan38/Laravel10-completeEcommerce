@@ -66,12 +66,12 @@
                         <td>
 
                           {{--Route difine this code  --}}
-                          <a href="{{ route('admin.product.edit',['id' => $valu->id ]) }}" class="btn btn-primary">Edit</a>
-                          <a href="{{ route('admin.product.delate',['id' => $valu->id ] ) }}" class="btn btn-danger">Delate</a>
+                          {{-- <a href="{{ route('admin.product.edit',['id' => $valu->id ]) }}" class="btn btn-primary">Edit</a>
+                          <a href="{{ route('admin.product.delate',['id' => $valu->id ] ) }}" class="btn btn-danger">Delate</a> --}}
 
                       {{-- anader code  --}}
-                          {{-- <a href="{{ url('admin/admin/edit',$valu->id ) }}" class="btn btn-primary">Edit</a>
-                          <a href="{{ url('admin/admin/delate',$valu->id  ) }}" class="btn btn-danger">Delate</a> --}}
+                          <a href="{{ url('admin/product/edit',$valu->id ) }}" class="btn btn-primary">Edit</a>
+                          <a href="{{ url('admin/product/delate',$valu->id  ) }}" class="btn btn-danger">Delate</a>
                         </td>
                     
                       </tr>

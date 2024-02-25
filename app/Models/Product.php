@@ -27,4 +27,9 @@ class Product extends Model
     {
         return self::where('slug','=',$slug)->count();
     }
+
+    public function getColor()
+    {
+        return $this->hasMany(ProductColor::class, "product_id");
+    }
 }

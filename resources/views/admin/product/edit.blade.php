@@ -18,6 +18,8 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-12" style="">
+              @include('admin.layouts._message')
+     
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
@@ -38,17 +40,17 @@
                       <div class="col-md-6">  
                         <div class="form-group">
                           <label>SKU<span style="color: red">*</span></label>
-                          <input type="text" class="form-control"  value="{{ old('sku', $product->sku) }}"  name="sku" placeholder="Enter SKU">
+                          <input type="text" class="form-control" required  value="{{ old('sku', $product->sku) }}"  name="sku" placeholder="Enter SKU">
                         </div>
                       </div>
 
                       <div class="col-md-6">  
                         <div class="form-group">
                           <label>Category<span style="color: red">*</span></label>
-                          <select class="form-control" name="category_id" id="ChangeCategory">
+                          <select class="form-control" name="category_id"  required id="ChangeCategory">
                             <option value="">Select</option>
                             @foreach ($getCategory as $category )
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            <option {{ ( $product->category_id == $category->id ) ? 'selected' : ''}} value="{{ $category->id }}">{{ $category->category_name }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -57,8 +59,11 @@
                       <div class="col-md-6">  
                         <div class="form-group">
                           <label>Sub Category<span style="color: red">*</span></label>
-                          <select class="form-control" name="get_sub_category" id="getSubcategory">
+                          <select class="form-control" name="subcategory_id" required id="getSubcategory">
                             <option value="">Select</option>
+                            @foreach ($getSubCategory as $subCategory )
+                            <option {{ ( $product->subcategory_id == $subCategory->id ) ? 'selected' : ''}} value="{{ $subCategory->id }}">{{ $subCategory->subCategory_name }}</option>
+                            @endforeach
                           </select>
                         </div>
                       </div>
@@ -69,7 +74,7 @@
                           <select class="form-control" name="brand_id" id="brand_id">
                             <option value="">Select</option>
                             @foreach ($getBrand as $brand )
-                            <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                            <option {{ ($product->brand_id == $brand->id ) ? 'selected' : ''}} value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -91,8 +96,19 @@
                         <div class="form-group">
                           <label>Color<span style="color: red">*</span></label>
                           @foreach ($getColor as $color )
+                            @php
+                                $checked = '';
+                            @endphp
+                              @foreach ($product->getColor as $pcolor )
+                              
+                              @if ($pcolor->color_id == $color->id )
+                              @php
+                                  $checked = 'checked';
+                              @endphp
+                            @endif
+                            @endforeach
                           <div class="">
-                            <label for=""><input type="checkbox" value="{{ $color->id }}"  name="color_id[]" >{{ $color->color_name }}</label>
+                            <label for=""><input {{ $checked }} type="checkbox" value="{{ $color->id }}"  name="color_id[]" >{{ $color->color_name }}</label>
                           </div>
                           @endforeach
         
@@ -104,14 +120,14 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>price<span style="color: red">*</span></label>
-                          <input type="text" class="form-control"  value=""  name="price" placeholder="Enter Price">
+                          <input type="number" class="form-control"  value="{{ $product->price }}"  name="price" placeholder="Enter Price">
                         </div>
                       </div>
 
                       <div class="col-md-6">  
                         <div class="form-group">
                           <label>Old Price <span style="color: red">*</span></label>
-                          <input type="text" class="form-control"  value=""  name="old_price" placeholder="Enter Old Price">
+                          <input type="number" class="form-control"  value="{{ $product->old_price }}"  name="old_price" placeholder="Enter Old Price">
                         </div>
                       </div>
 
@@ -137,7 +153,7 @@
                                       <input type="text" name="" placeholder="Name" class="form-control">
                                     </td>
                                     <td>
-                                      <input type="text" name=""  placeholder="Price" class="form-control">
+                                      <input type="number" name=""  placeholder="Price" class="form-control">
                                     </td>
                                     <td style="width: 200px;">
                                       <button type="button" class="btn btn-primary AddSize">Add</button>
@@ -153,7 +169,7 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label>Short Description <span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control"  value=""  name="short_description" placeholder="Enter Short Description"></textarea>
+                          <textarea type="text" class="form-control"  value="{{ $product->short_description }}"  name="short_description" placeholder="Enter Short Description"></textarea>
                         </div>
                       </div>
                     </div>
@@ -161,7 +177,7 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label> Description <span style="color: red">*</span></label>
-                          <textarea  class="form-control editor" id="mytextarea" value=""  name="description" placeholder="Enter  Description"></textarea>
+                          <textarea  class="form-control editor" id="mytextarea" value="{{ $product->description }}"  name="description" placeholder="Enter  Description"></textarea>
                         </div>
                       </div>
                     </div>
@@ -170,7 +186,7 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label>Additional Information<span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control editor"  value=""  name="additional_information" placeholder="Enter Additional Information"></textarea>
+                          <textarea type="text" class="form-control editor"  value="{{ $product->additional_information }}"  name="additional_information" placeholder="Enter Additional Information"></textarea>
                         </div>
                       </div>
                     </div>
@@ -178,7 +194,7 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label>Shipping Returns<span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control editor"  value=""  name="shipping_returns" placeholder="Enter Shipping Returns"></textarea>
+                          <textarea type="text" class="form-control editor"  value="{{ $product->shipping_returns }}"  name="shipping_returns" placeholder="Enter Shipping Returns"></textarea>
                         </div>
                       </div>
                     </div>
@@ -188,10 +204,10 @@
                         <div class="form-group">
                           <label>Status <span style="color: red">*</span></label>
                           <select class="form-control" name="status">
-                             <option  value="0">Active </option>
-                             <option  value="1">Inactive</option>
-                             {{-- <option {{ (old('status',$getRecord->status) == 0) ? 'selected' : ''}} value="0">Active </option>
-                             <option {{ (old('status',$getRecord->status) == 1) ? 'selected' : ''}} value="1">Inactive</option> --}}
+                             {{-- <option  value="0">Active </option>
+                             <option  value="1">Inactive</option> --}}
+                             <option {{ ($product->status == 0) ? 'selected' : ''}} value="0">Active </option>
+                             <option {{ ($product->status == 1) ? 'selected' : ''}} value="1">Inactive</option>
                           </select>
                         </div>
                       </div>
@@ -201,7 +217,7 @@
                   <!-- /.card-body -->
   
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                   </div>
                 </form>
               </div>
@@ -223,27 +239,28 @@
 {{-- <script src="{{asset('/')}}public/admin/assets/tinymce/tinymce_jquery.min.js"></script> --}}
 
 
-<script src="{{asset('/')}}public/admin/assets/plugins/summernote/summernote-bs4.min.js"></script>
+{{-- <script src="{{asset('/')}}public/admin/assets/plugins/summernote/summernote-bs4.min.js"></script> --}}
 
-{{-- <script src="https:cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script> --}}
+<script src="https:cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script>
+
      <script type="text/javascript">
 
-       $('.editor').summernote({
-        height: 300,
-       });
+      //  $('.editor').summernote({
+      //   height: 300,
+      //  });
       
     
-    //  tinymce.init({
-    //   selector:'.editor',
-    //     height: 500,
-    //     menubar: false,
-    //     plugins: [
-    //        'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
-    //        'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-    //        'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
-    //     ],
-    //     toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help'
-    //   });
+     tinymce.init({
+      selector:'.editor',
+        height: 500,
+        menubar: false,
+        plugins: [
+           'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+           'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+           'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+        ],
+        toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help'
+      });
 
       var i =1000;
          $('body').delegate('.AddSize','click',function(){

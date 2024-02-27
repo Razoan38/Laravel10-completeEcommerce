@@ -9,6 +9,8 @@ use App\Models\color;
 use App\Models\Product;
 use App\Models\SubCategories;
 use App\Models\ProductColor;
+use App\Models\ProductImage;
+use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -71,10 +73,11 @@ class ProductController extends Controller
 
     public function update(Request $request, $product_id)
     {
-        // dd($request->all());
+         
         $product = Product::getSingle($product_id);
         if(!empty($product))
         {
+
             $product->title =trim($request->title);
             $product->slug =trim($request->slug);
             $product->sku =trim($request->sku);
@@ -102,11 +105,81 @@ class ProductController extends Controller
                 }
             }
 
+            ProductSize::deleteRecord($product->id);
+            if(!empty($request->size))
+            {
+                foreach($request->size as $size) 
+                {
+                  if(!empty($size['name']))
+                  {
+                    $saveSize = new ProductSize;
+                    $saveSize->name  = $size['name'];
+                    $saveSize->price = !empty($size['price']) ? $size['price'] : 0;
+                    $saveSize->product_id = $product_id;
+                    $saveSize->save();
+                  }
+                
+                }
+            }
+            
+           if(!empty($request->file('image')))
+           {
+              foreach($request->file('image') as $value)
+              {
+                  if($value->isValid())
+                  {
+                   $ext =$value->getClientOriginalExtension();
+                   $randomStr = $product->id.Str::random(20);
+                   $filename =strtolower($randomStr).'.'.$ext;
+                   $value->move('upload/product/',$filename);
+                    
+                   $imageuplode = new ProductImage;
+                   $imageuplode->image_name = $filename;
+                   $imageuplode->image_extension = $ext;
+                   $imageuplode->product_id = $product_id;
+                   $imageuplode->save();
+                  }
+              }
+
+           }
+           
+
             return redirect()->back()->with('success',"Product Successfully Update");
         }
         else {
             abort(404);
         }
 
+    }
+
+    public function image_delate($id)
+    {
+        $image = ProductImage::getSingle($id);
+        if(!empty($image->getimageshow()))
+        {
+              unlink('upload/product/'.$image->image_name);
+        }
+        $image->delete();
+
+        return redirect()->back()->with('success',"Product Image Successfully Deleted"); 
+    }
+
+    public function product_sortable_image(Request $request)
+    {
+        if(!empty($request->photo_id))
+        {
+            $i =1;
+            foreach($request->photo_id as $photo_id)
+            {
+                $image  = ProductImage::getSingle($photo_id);
+                $image->order_by =$i;
+                $image->save();
+
+                $i++;
+            }
+        }
+
+        $json['success'] =true;
+        echo json_encode($json);
     }
 }

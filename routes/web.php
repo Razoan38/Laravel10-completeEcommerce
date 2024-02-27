@@ -81,6 +81,10 @@ Route::group(['middleware' =>'admin'],function(){
     Route::post('admin/product/edit/{id}',[ProductController::class,'update'])->name('admin.product.update');
     Route::get('admin/product/delate/{id}',[ProductController::class,'delate'])->name('admin.product.delate');
 
+    Route::get('admin/product/image_delate/{id}',[ProductController::class,'image_delate'])->name('admin.product.image_delate');
+
+    Route::post('admin/product_sortable_image',[ProductController::class,'product_sortable_image'])->name('admin.product_sortable_image');
+
     // Route::get('admin/dashboard', function () {
     //     return view('admin.dashboard');
     // });
@@ -100,5 +104,5 @@ Route::get('/', function () {
 
 
 
-// 21 number video dakci error solution 
+// 24 number video dakci error solution 
 // 0 m pojunto 

@@ -32,4 +32,12 @@ class Product extends Model
     {
         return $this->hasMany(ProductColor::class, "product_id");
     }
+    public function getSize()
+    {
+        return $this->hasMany(ProductSize::class, "product_id");
+    }
+    public function getimage()
+    {
+        return $this->hasMany(ProductImage::class, "product_id")->orderBy('order_by','asc');
+    }
 }

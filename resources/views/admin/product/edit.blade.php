@@ -25,7 +25,7 @@
                 <div class="card-header">
                   <h3 class="card-title">Edit Product</h3>
                 </div>
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                   <div class="card-body">
 
@@ -120,14 +120,14 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>price<span style="color: red">*</span></label>
-                          <input type="number" class="form-control"  value="{{ $product->price }}"  name="price" placeholder="Enter Price">
+                          <input type="number" class="form-control"  value="{{!empty($product->price) ? $product->price : '' }}"  name="price" placeholder="Enter Price">
                         </div>
                       </div>
 
                       <div class="col-md-6">  
                         <div class="form-group">
                           <label>Old Price <span style="color: red">*</span></label>
-                          <input type="number" class="form-control"  value="{{ $product->old_price }}"  name="old_price" placeholder="Enter Old Price">
+                          <input type="number" class="form-control"  value="{{ !empty($product->old_price) ? $product->old_price : ''}}"  name="old_price" placeholder="Enter Old Price">
                         </div>
                       </div>
 
@@ -148,23 +148,70 @@
                                 </thead>
 
                                 <tbody id="AppendSize">
-                                  <tr>
+                                  @php
+                                     $i_size = 1;
+                                  @endphp
+                                  @foreach ( $product->getSize as $size)
+                                  <tr id="DeleteSize{{ $i_size }}">
                                     <td>
-                                      <input type="text" name="" placeholder="Name" class="form-control">
+                                      <input type="text" name="size[{{ $i_size }}][name]" value="{{ $size->name }}" placeholder="Name" class="form-control">
                                     </td>
                                     <td>
-                                      <input type="number" name=""  placeholder="Price" class="form-control">
+                                      <input type="number" name="size[{{ $i_size }}][price]" value="{{ $size->price }}" placeholder="Price" class="form-control">
+                                    </td>
+                                    <td style="width: 200px;">
+                                      <button type="button" id="{{ $i_size }}" class="btn btn-danger DeleteSize">Delete</button>
+                                    </td>
+                                  </tr>
+
+                                  @php
+                                  $i_size++;
+                                  @endphp
+                                  @endforeach
+
+                                  <tr>
+                                    <td>
+                                      <input type="text" name="size[100][name]" placeholder="Name" class="form-control">
+                                    </td>
+                                    <td>
+                                      <input type="number" name="size[100][price]"  placeholder="Price" class="form-control">
                                     </td>
                                     <td style="width: 200px;">
                                       <button type="button" class="btn btn-primary AddSize">Add</button>
                                     </td>
-                                  </tr>
+                                  </tr>                                  
                            </table>
                           </div>
                         </div>
                       </div>
                     </div>
-    <hr>
+                     <hr> 
+
+                     <div class="row">
+                      <div class="col-md-12">  
+                        <div class="form-group">
+                          <label>Image <span style="color: red">*</span></label>
+                          <input type="file" class="form-control" name="image[]" multiple accept="image/*"  style="padding: 5px;">
+                        </div>
+                      </div>
+                    </div>
+                      
+                    @if (!empty($product->getimage->count()))
+                    <div class="row" id="sortable">
+                      @foreach ($product->getimage as $image )
+                        @if (!empty($image->getimageshow()))
+                           <div class="col-md-1 sortable_image " id="{{ $image->id }}"  style="text-align: center">
+                            <img src="{{ $image->getimageshow() }}" alt="" style="width: 100%; height: 80px;">
+                            <a href="{{ route('admin.product.image_delate',['id' => $image->id ]) }}" class="btn btn-danger btn-sm" style="margin-top:10px "
+                              onclick="return confirm('Are you sure  you want to delete?');">Delete</a>
+                           </div> 
+                        @endif                       
+                      @endforeach
+                    </div>
+                      
+                    @endif
+                     <hr>
+
                      <div class="row">
                       <div class="col-md-12">  
                         <div class="form-group">
@@ -236,7 +283,8 @@
 @section('script')
 {{-- <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@1/dist/tinymce-jquery.min.js"></script> --}}
 {{-- <script src="{{asset('/')}}public/admin/assets/tinymce/tinymce_jquery.min.js"></script> --}}
-{{-- <script src="{{asset('/')}}public/admin/assets/tinymce/tinymce_jquery.min.js"></script> --}}
+
+<script src="{{asset('/')}}public/admin/sortable/jquery-ui.js"></script>
 
 
 {{-- <script src="{{asset('/')}}public/admin/assets/plugins/summernote/summernote-bs4.min.js"></script> --}}
@@ -245,11 +293,41 @@
 
      <script type="text/javascript">
 
+
+    $(document).ready(function() {
+        $( "#sortable" ).sortable({
+           
+          update: function(event,ui){
+            var photo_id =new Array();
+            $('.sortable_image').each(function(){
+                var id =$(this).attr('id');
+                photo_id.push(id);
+                
+            });
+                $.ajax({
+                    type :"POST",
+                    url : "{{ url('admin/product_sortable_image') }}",//aita taika neya route gaci 
+                    data : {
+                          "photo_id" : photo_id,
+                          "_token": "{{ csrf_token()  }}"
+                    },
+                    dataType : "json",
+                    success: function (data) {
+                     
+                    },
+                    error:function (data) {
+
+                  }
+                  });
+          }
+        });
+      });
+
       //  $('.editor').summernote({
       //   height: 300,
       //  });
       
-    
+     // tinymce
      tinymce.init({
       selector:'.editor',
         height: 500,
@@ -262,14 +340,16 @@
         toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist checklist outdent indent | removeformat | code table help'
       });
 
+      //end tinymce
+     // Add Button 
       var i =1000;
          $('body').delegate('.AddSize','click',function(){
              var html = ' <tr id="DeleteSize'+i+'">\n\
                                <td>\n\
-                                      <input type="text" name="" placeholder="Name" value="'+i+'" class="form-control">\n\
+                                      <input type="text" name="size['+i+'][name]" placeholder="Name" value="'+i+'" class="form-control">\n\
                                 </td>\n\
                                 <td>\n\
-                                      <input type="text" name="" placeholder="Price" class="form-control">\n\
+                                      <input type="text" name="size['+i+'][price]" placeholder="Price" class="form-control">\n\
                                 </td>\n\
                                 <td>\n\
                                        <button type="button" id="'+i+'" class="btn btn-danger DeleteSize">Delete</button>\n\
@@ -279,12 +359,13 @@
 
                       $('#AppendSize').append(html);
          });
-
+//add button end 
+// add button delate
          $('body').delegate('.DeleteSize','click',function(){
           var id =$(this).attr('id');
            $('#DeleteSize'+id).remove();
          });
-      
+      //add button delate end 
          $('body').delegate('#ChangeCategory','change',function(e){
         var id =$(this).val();
 

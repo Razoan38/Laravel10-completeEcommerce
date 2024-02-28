@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\admin\ColorController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductsController as ProductFront;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,6 +105,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('{category_slug}',[ProductFront::class,'getCategory'])->name('category_slug');
 
 
 // 24 number video dakci error solution 

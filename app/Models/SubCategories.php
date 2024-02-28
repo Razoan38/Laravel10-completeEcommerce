@@ -22,7 +22,7 @@ class SubCategories extends Model
             ->join('users', 'users.id', '=', 'sub_categories.created_by')
             ->where('sub_categories.is_delete', '=', 0)
             ->orderBy('sub_categories.id', 'desc')
-            ->paginate(5);
+            ->paginate(20);
     }
     public static function getRecordSubCategory($category_id)
     {

@@ -8,6 +8,7 @@
     Add New Admin
 @endsection
 @section('content')
+
 <div class="content-wrapper">
       
   

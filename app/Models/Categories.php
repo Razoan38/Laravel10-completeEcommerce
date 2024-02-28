@@ -15,6 +15,13 @@ class Categories extends Model
     {
         return self::find($id);
     }
+    static public function getSingleslug($category_slug)
+    {
+        return self::where('category_slug', '=', $category_slug)
+        ->where('categories.status','=', 0)
+        ->where('categories.is_delete','=', 0)
+        ->first();
+    }
 
     static public function getRecord()
     {
@@ -33,7 +40,21 @@ class Categories extends Model
         ->orderBy('categories.category_name','asc')
         ->get();
     }
+    static public function getRecordMenu()
+    {
+        return self::select('categories.*')
+        ->join('users','users.id','=', 'categories.created_by')
+        ->where('categories.is_delete','=', 0)
+        ->where('categories.status','=', 0)
+        ->get();
+    }
 
+    public function getSubCategory()
+    {
+        return $this->hasMany(SubCategories::class, "category_id")
+        ->where('sub_categories.status','=', 0)
+        ->where('sub_categories.is_delete','=', 0);
+    }
    
     
     // public static function deletecategory($id)

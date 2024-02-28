@@ -56,14 +56,11 @@ class SubCategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        // request()->validate([
-        //         'subcategory_slug'=>'required|unique:sub_categories'
-        // ]); 
-        // subcategories
+       
         request()->validate([
             'subcategory_slug'=>'required|unique:sub_categories,subcategory_slug,'.$id
              ]);
-        $subcategory = new SubCategories();
+        $subcategory = SubCategories::getSingle($id);
         $subcategory->category_id = trim($request->category_id);
         $subcategory->subcategory_name = trim($request->subcategory_name);
         $subcategory->subcategory_slug = Str::slug($request->subcategory_name, '-');
@@ -74,7 +71,6 @@ class SubCategoryController extends Controller
         $subcategory->created_by = Auth::user()->id;
         $subcategory->save();
 
-        //    dd($category->all());
          return redirect('admin/sub_category/list')->with('success',"Sub Category Successfully Update");
      }
 

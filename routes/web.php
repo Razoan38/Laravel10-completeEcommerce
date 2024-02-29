@@ -106,7 +106,7 @@ Route::get('/', function () {
 });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
-Route::get('{category_slug}',[ProductFront::class,'getCategory'])->name('category_slug');
+Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
 
 
 // 24 number video dakci error solution 

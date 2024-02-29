@@ -7,10 +7,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>eCommerce</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
 
+    <title>{{ !empty($meta_title) ? $meta_title : '' }}</title>
+
+    @if (!empty($meta_description))
+       <meta name="description" content="{{ $meta_description }}">
+    @endif
+
+    @if (!empty($meta_keywords))
+       <meta name="keywords" content="{{ $meta_keywords }}">
+    @endif
     <!-- Favicon -->
     
     <link rel="shortcut icon" href="{{asset('/')}}website/assets/images/icons/favicon.ico">
@@ -21,6 +27,7 @@
     <link rel="stylesheet" href="{{asset('/')}}website/assets/css/plugins/magnific-popup/magnific-popup.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('/')}}website/assets/css/style.css">
+    @yield('style')
 </head>
 <body>
     <div class="page-wrapper">
@@ -152,7 +159,7 @@
     </div>
 </div>
 
-<div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+{{-- <div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
     <div class="row justify-content-center">
         <div class="col-10">
             <div class="row no-gutters bg-white newsletter-popup-content">
@@ -181,7 +188,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- Plugins JS File -->
 <script src="{{asset('/')}}website/assets/js/jquery.min.js"></script>
 <script src="{{asset('/')}}website/assets/js/bootstrap.bundle.min.js"></script>
@@ -192,6 +199,8 @@
 <script src="{{asset('/')}}website/assets/js/jquery.magnific-popup.min.js"></script>
 <!-- Main JS File -->
 <script src="{{asset('/')}}website/assets/js/main.js"></script>
+
+@yield('script')
 </body>
 
 

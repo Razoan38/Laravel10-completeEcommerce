@@ -15,6 +15,14 @@ class SubCategories extends Model
         return self::find($id);
     }
 
+    static public function getSingleslug($subcategory_slug)
+    {
+        return self::where('subcategory_slug', '=', $subcategory_slug)
+        ->where('sub_categories.status','=', 0)
+        ->where('sub_categories.is_delete','=', 0)
+        ->first();
+    }
+
     public static function getRecord()
     {
         return self::select('sub_categories.*', 'users.name as created_by_name', 'categories.category_name as category_name')
@@ -33,5 +41,14 @@ class SubCategories extends Model
             ->where('sub_categories.category_id', '=', $category_id)
             ->orderBy('sub_categories.subcategory_name', 'asc')
             ->get();
+    }
+
+    public function TotalProduct()
+    {
+        return $this->hasMany(Product::class, "subcategory_id")
+        ->where('products.is_delete','=', 0)
+        ->where('products.status','=', 0)
+        ->count();
+
     }
 }

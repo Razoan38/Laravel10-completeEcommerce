@@ -106,8 +106,9 @@ Route::get('/', function () {
 });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax'])->name('get_filter_product_ajax');
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
 
 
-// 24 number video dakci error solution 
-// 0 m pojunto 
+// 35 number video dakci error solution 
+// 8 m pojunto dakci video 

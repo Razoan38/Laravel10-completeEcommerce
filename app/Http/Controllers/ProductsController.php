@@ -49,4 +49,9 @@ class ProductsController extends Controller
             abort(404);
         }
      }
+
+     public function getFilterProductAjax(Request $request)
+     {
+          dd($request->all());
+     }
 }

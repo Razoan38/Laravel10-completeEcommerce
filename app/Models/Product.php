@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request ;
 
 class Product extends Model
 {
@@ -41,10 +42,55 @@ class Product extends Model
                         $return = $return->where('products.subcategory_id','=', $subcategory_id);
                     }
 
+                    if(!empty (Request::get('subcategory_id')))
+                    { 
+                        $subcategory_id = rtrim(Request::get('subcategory_id'),',') ;
+                        $subcategory_id_array = explode(",", $subcategory_id);
+                        $return = $return->whereIn('products.subcategory_id', $subcategory_id_array);
+                    }
+                    // else 
+                    // {
+                    //     if(!empty(Request::get('old_category_id')))
+                    //     {
+                    //         $return = $return->where('products.category_id','=',
+                    //         (Request::get('old_category_id')));
+                    //     }
+                    //     if(!empty(Request::get('old_subcategory_id')))
+                    //     {
+                    //         $return = $return->where('products.subcategory_id','=',
+                    //          (Request::get('old_subcategory_id')));
+                    //     }
+
+                    // }
+
+                    if(!empty (Request::get('color_id')))
+                    { 
+                        $color_id = rtrim(Request::get('color_id'),',') ;
+                        $color_id_array = explode(",", $color_id);
+                        $return = $return->join('product_colors','product_colors.product_id','=','products.id');
+                        $return = $return->whereIn('product_colors.color_id', $color_id_array);
+                    }
+                    if(!empty (Request::get('brand_id')))
+                    { 
+                        $brand_id = rtrim(Request::get('brand_id'),',') ;
+                        $brand_id_array = explode(",", $brand_id);
+                        $return = $return->join('product_colors','product_colors.product_id','=','products.id');
+                        $return = $return->whereIn('products.brand_id', $brand_id_array);
+                    }
+
+                    if(!empty (Request::get('start_price')) && !empty (Request::get('end_price')))
+                    {
+                        $start_price = str_replace('$','', Request::get('start_price'));
+                        $end_price = str_replace('$','', Request::get('end_price'));
+                        $return = $return->where('products.price','>=',$start_price );
+                        $return = $return->where('products.price','<=',$end_price );
+                    }
+
                     $return = $return->where('products.is_delete','=', 0)
                     ->where('products.status','=', 0)
+                    ->groupBy('products.id')
                     ->orderBy('products.id','desc')
-                    ->paginate(1);
+                    ->paginate(20);
 
                     return $return;
     }

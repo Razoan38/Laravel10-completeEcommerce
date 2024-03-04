@@ -71,67 +71,22 @@
                 				</div>
                 			</div>
 
-                            <div class="products mb-3">
-                                <div class="row justify-content-center">
-                                     @foreach ($getProduct as $product )
-                                      @php
-                                          $getProductimage = $product->getSingleimage($product->id)
-                                      @endphp
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="product product-7 text-center">
-                                            <figure class="product-media">
-                                                <span class="product-label label-new">New</span>
-                                                <a href="product.html">
-                                                    @if (!empty($getProductimage) && !empty($getProductimage->getimageshow()))
-                                                    <img src="{{ $getProductimage->getimageshow() }}" alt="{{ $product->title }}" class="product-image"
-                                                    style="height: 350px;width: 100%;object-fit: cover">  
-                                                    @endif
-                                                   
-                                                </a>
+							<div class="" id="getProductAjax">
+								@include('website.product._list')
+							</div>
 
-                                                <div class="product-action-vertical">
-                                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                                </div><!-- End .product-action-vertical -->
-
-                                                <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                                </div><!-- End .product-action -->
-                                            </figure><!-- End .product-media -->
-
-                                            <div class="product-body">
-                                                <div class="product-cat">
-                                                    <a href="{{ url($product->category_slug.'/'.$product->sub_category_slug ) }}">{{ $product->sub_category_name }}</a>
-                                                </div><!-- End .product-cat -->
-                                                <h3 class="product-title"><a href="{{ url($product->slug) }}">{{ $product->title }}</a></h3><!-- End .product-title -->
-                                                <div class="product-price">
-                                                    ${{ number_format($product->price, 2) }}
-                                                </div><!-- End .product-price -->
-                                                <div class="ratings-container">
-                                                    <div class="ratings">
-                                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                                    </div><!-- End .ratings -->
-                                                    <span class="ratings-text">( 2 Reviews )</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div><!-- End .row -->
-                            </div><!-- End .products -->
-                            <div class="" style="padding: 10px ; padding-left: 100%" >
-                                {!! $getProduct->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!} 
-                               </div>
                 		</div>
 
                 		<aside class="col-lg-3 order-lg-first">
 							<form action="" id="FilterForm" method="POST">
 								{{ csrf_field() }}
-								<input type="text" name="subcategory_id" id="get_subcategory_id">
-								<input type="text" name="brand_id" id="get_Brand_id">
-								<input type="text" name="color_id" id="get_color_id">
-								<input type="text" name="sortBy_id" id="get_sortBy_id">
+								<input type="hidden" name="subcategory_id" id="get_subcategory_id">
+								<input type="hidden" name="brand_id" id="get_Brand_id">
+								<input type="hidden" name="color_id" id="get_color_id">
+								<input type="hidden" name="sortBy_id" id="get_sortBy_id">
+
+								<input type="hidden" name="start_price" id="get_start_price">
+								<input type="hidden" name="end_price" id="get_end_price">
 							</form>
                 			<div class="sidebar sidebar-shop">
                 				<div class="widget widget-clean">
@@ -379,13 +334,52 @@
 				data :  $('#FilterForm').serialize(),
 				dataType : "json",
 				success  : function(data) {
-
+                     $('#getProductAjax').html(data.success)
 				},
 				error :   function(data) {
 
 				}
 			});
 		}
+
+		var i = 0;
+		if ( typeof noUiSlider === 'object' ) {
+		var priceSlider  = document.getElementById('price-slider');
+
+		noUiSlider.create(priceSlider, {
+			start: [ 0, 5000 ],
+			connect: true,
+			step: 1,
+			margin: 1,
+			range: {
+				'min': 0,
+				'max': 8000
+			},
+			tooltips: true,
+			format: wNumb({
+		        decimals: 0,
+		        prefix: '$'
+		    })
+		});
+		priceSlider.noUiSlider.on('update', function( values, handle ){
+			
+			var start_price = values[0];
+			var end_price = values[1];
+			$('#get_start_price').val(start_price);
+			$('#get_end_price').val(end_price);
+			$('#filter-price-range').text(values.join(' - '));
+			
+			FilterForm();
+			//  if(i=0 || i = 1)
+			//  {
+			// 	i++;
+			//  }
+			//  else{
+
+			// 	FilterForm();
+			//  }
+		 });
+	    }
 		
 
 </script>

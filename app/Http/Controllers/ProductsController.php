@@ -42,7 +42,9 @@ class ProductsController extends Controller
             $data['meta_title']       = $getCategory->meta_title;
             $data['meta_description'] = $getCategory->meta_description;
             $data['meta_keywords']    = $getCategory->meta_keywords;
+
             $data['getProduct'] = Product::getProduct($getCategory->id);
+
             return view('website.product.list',$data);
         }
         else{
@@ -52,6 +54,12 @@ class ProductsController extends Controller
 
      public function getFilterProductAjax(Request $request)
      {
-          dd($request->all());
+        $getProduct = Product::getProduct();
+        return response()->json([
+         "status"  =>true,
+         "success"  =>view("website.product._list",[
+            "getProduct"  =>$getProduct,
+         ])->render(),
+        ],200);
      }
 }

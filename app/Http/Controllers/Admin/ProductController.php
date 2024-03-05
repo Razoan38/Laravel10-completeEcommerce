@@ -30,16 +30,15 @@ class ProductController extends Controller
 
     public function insert(Request $request)
     { 
-        $title = trim($request->title);
+      $title = trim($request->title);
        $product = new Product();
        $product->title = $title;
        $product->created_by = Auth::user()->id;
        $product->save();
 
-       $slug = Str::slug($title, "_");
+       $slug = Str::slug($title, '-' );
 
        $checkSlug =Product::checkSlug($slug);
-
        if(empty($checkSlug))
        {
         $product->slug = $slug;
@@ -79,7 +78,9 @@ class ProductController extends Controller
         {
 
             $product->title =trim($request->title);
-            $product->slug =trim($request->slug);
+            // $product->slug =trim($request->slug);
+            $product->slug = empty($request->slug) ? Str::slug($request->title) : Str::slug($request->slug);
+            
             $product->sku =trim($request->sku);
             $product->category_id =trim($request->category_id);
             $product->subcategory_id =trim($request->subcategory_id);
@@ -181,5 +182,11 @@ class ProductController extends Controller
 
         $json['success'] =true;
         echo json_encode($json);
+    }
+
+    public function delate($id)
+    {
+        Product::destroy($id);
+        return redirect()->route('admin.product.list')->with('success'," Product Successfully Delete");
     }
 }

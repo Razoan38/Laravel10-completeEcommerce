@@ -1,4 +1,4 @@
-{{-- 
+
 <div class="products mb-3">
     <div class="row justify-content-center">
          @foreach ($getProduct as $product )
@@ -48,6 +48,6 @@
         @endforeach
     </div><!-- End .row -->
 </div><!-- End .products -->
-<div class="" style="padding: 10px ; padding-left: 100%" >
+{{-- <div class="" style="padding: 10px ; padding-left: 100%" >
     {!! $getProduct->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!} 
  </div> --}}

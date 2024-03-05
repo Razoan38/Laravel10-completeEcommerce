@@ -51,7 +51,7 @@
                 			<div class="toolbox">
                 				<div class="toolbox-left">
                 					<div class="toolbox-info">
-                						Showing <span>9 of 56</span> Products
+                						Showing <span> {{ $getProduct->perPage() }} of {{ $getProduct->total() }}</span> Products
                 					</div><!-- End .toolbox-info -->
                 				</div><!-- End .toolbox-left -->
 
@@ -72,7 +72,12 @@
                 			</div>
 
 							<div class="" id="getProductAjax">
-								@include('website.product._list')
+								@include('website.product.allProduct')
+							</div>
+							
+							<div class="" style="text-align: center;">
+								<a href="javascript:;" @if(empty($page)) style="display: none;" @endif
+								data-page="{{$page}}" class="btn btn-primary LoadMore">Load More</a>
 							</div>
 
                 		</div>
@@ -80,6 +85,13 @@
                 		<aside class="col-lg-3 order-lg-first">
 							<form action="" id="FilterForm" method="POST">
 								{{ csrf_field() }}
+
+								<input type="hidden" name="old_category_id" id=""
+								value="{{ !empty($getCategory) ? $getCategory->id : '' }}" >
+								
+							    <input type="hidden" name="old_subcategory_id" id=""
+								value="{{ !empty($getSubCategory) ? $getSubCategory->id : ''}}">
+
 								<input type="hidden" name="subcategory_id" id="get_subcategory_id">
 								<input type="hidden" name="brand_id" id="get_Brand_id">
 								<input type="hidden" name="color_id" id="get_color_id">
@@ -326,15 +338,31 @@
             });
         });
 
+		var xhr;
 		function FilterForm()
 		{
-			$.ajax({
+			if(xhr && xhr.readyState != 4)
+			{
+				xhr.abort();
+			}
+
+			xhr = $.ajax({
 				type : "POST",
 				url  :  "{{ url('get_filter_product_ajax') }}",
 				data :  $('#FilterForm').serialize(),
 				dataType : "json",
 				success  : function(data) {
                      $('#getProductAjax').html(data.success)
+
+					 $('.LoadMore').attr('data-page', data.page);
+					 if(data.page == 0)
+					 {
+						$('.LoadMore').hide();
+					 }
+					 else
+					 {
+						$('.LoadMore').show();
+					 }
 				},
 				error :   function(data) {
 
@@ -342,12 +370,48 @@
 			});
 		}
 
+		$('body').on( 'click', '.LoadMore', function() {
+			var page = $(this).attr('data-page');
+
+			$('.LoadMore').html('Loading ....');
+
+			if(xhr && xhr.readyState !== 4)
+			{
+				xhr.abort();
+			}
+
+			xhr = $.ajax({
+				type : "POST",
+				url  :  "{{ url('get_filter_product_ajax') }}?page="+page,
+				data :  $('#FilterForm').serialize() + '&page=' +page,
+				dataType : "json",
+				success  : function(data) {
+                     $('#getProductAjax').html(data.success)
+					 $('.LoadMore').attr('data-page',data.page);
+					 $('.LoadMore').html('Load More');
+
+					 if(data.page == 0)
+					 {
+						$('.LoadMore').hide();
+					 }
+					 else
+					 {
+						$('.LoadMore').show();
+					 }
+				},
+				error :   function(data) {
+
+				}
+			});
+
+		});
+
 		var i = 0;
 		if ( typeof noUiSlider === 'object' ) {
 		var priceSlider  = document.getElementById('price-slider');
 
 		noUiSlider.create(priceSlider, {
-			start: [ 0, 5000 ],
+			start: [ 0, 8000 ],
 			connect: true,
 			step: 1,
 			margin: 1,
@@ -368,16 +432,15 @@
 			$('#get_start_price').val(start_price);
 			$('#get_end_price').val(end_price);
 			$('#filter-price-range').text(values.join(' - '));
-			
-			FilterForm();
-			//  if(i=0 || i = 1)
-			//  {
-			// 	i++;
-			//  }
-			//  else{
 
-			// 	FilterForm();
-			//  }
+			 if(i == 0 || i == 1)
+			 {
+				i++;
+			 }
+			 else{
+
+				FilterForm();
+			 }
 		 });
 	    }
 		

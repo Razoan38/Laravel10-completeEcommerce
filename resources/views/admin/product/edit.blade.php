@@ -216,7 +216,9 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label>Short Description <span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control"  value="{{ $product->short_description }}"  name="short_description" placeholder="Enter Short Description"></textarea>
+                          <textarea type="text" class="form-control"  value="{{ $product->short_description }}"  name="short_description" placeholder="Enter Short Description">
+                            {{ old('short_description',  $product->short_description) }}
+                          </textarea>
                         </div>
                       </div>
                     </div>
@@ -224,7 +226,9 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label> Description <span style="color: red">*</span></label>
-                          <textarea  class="form-control editor" id="mytextarea" value="{{ $product->description }}"  name="description" placeholder="Enter  Description"></textarea>
+                          <textarea  class="form-control editor" id="mytextarea" value="{{ $product->description }}"  name="description" placeholder="Enter  Description">
+                            {{ old('description',  $product->description) }}
+                          </textarea>
                         </div>
                       </div>
                     </div>
@@ -233,7 +237,9 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label>Additional Information<span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control editor"  value="{{ $product->additional_information }}"  name="additional_information" placeholder="Enter Additional Information"></textarea>
+                          <textarea type="text" class="form-control editor"  value="{{ $product->additional_information }}"  name="additional_information" placeholder="Enter Additional Information">
+                            {{ old('additional_information',  $product->additional_information) }}
+                          </textarea>
                         </div>
                       </div>
                     </div>
@@ -241,7 +247,8 @@
                       <div class="col-md-12">  
                         <div class="form-group">
                           <label>Shipping Returns<span style="color: red">*</span></label>
-                          <textarea type="text" class="form-control editor"  value="{{ $product->shipping_returns }}"  name="shipping_returns" placeholder="Enter Shipping Returns"></textarea>
+                          <textarea type="text" class="form-control editor"  value="{{ $product->shipping_returns }}"  name="shipping_returns" placeholder="Enter Shipping Returns">
+                            {{ old('shipping_returns',  $product->shipping_returns) }}</textarea>
                         </div>
                       </div>
                     </div>

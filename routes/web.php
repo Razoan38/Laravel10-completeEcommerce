@@ -110,5 +110,5 @@ Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
 
 
-// 37 number video dakci error solution 
+// 41 number video dakci error solution 
 // 0 m pojunto dakci video 

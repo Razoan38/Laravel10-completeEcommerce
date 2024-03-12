@@ -52,14 +52,14 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="{{ route('home') }}" class="logo">
+                <a href="{{ url('') }}" class="logo">
                     <img src="{{asset('/')}}website/assets/images/logo.png" alt="Molla Logo" width="105" height="25">
                 </a>
 
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
                         <li class=" active">
-                            <a href="{{ route('home') }}" class="">Home</a>  
+                            <a href="{{ url('') }}" class="">Home</a>  
                         </li>
                         <li>
                             <a href="javascript:;" class="sf-with-ul">Shop</a>
@@ -159,10 +159,11 @@
             <div class="header-right">
                 <div class="header-search">
                     <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                    <form action="" method="get">
+                    <form action="{{ url('search') }}" method="GET">
                         <div class="header-search-wrapper">
                             <label for="q" class="sr-only">Search</label>
-                            <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                            <input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
+                            value="{{ !empty(Request::get('q')) ? Request::get('q') : '' }}"  required>
                         </div>
                     </form>
                 </div>

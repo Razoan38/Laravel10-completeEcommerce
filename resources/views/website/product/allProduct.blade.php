@@ -8,8 +8,8 @@
         <div class="col-12 col-md-4 col-lg-4">
             <div class="product product-7 text-center">
                 <figure class="product-media">
-                    <span class="product-label label-new">New</span>
-                    <a href="product.html">
+                   
+                    <a href="{{ url($product->category_slug) }}">
                         @if (!empty($getProductimage) && !empty($getProductimage->getimageshow()))
                         <img src="{{ $getProductimage->getimageshow() }}" alt="{{ $product->title }}" class="product-image"
                         style="height: 350px; width: 100%; object-fit: cover">  
@@ -19,8 +19,7 @@
 
                     <div class="product-action-vertical">
                         <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+
                     </div><!-- End .product-action-vertical -->
 
                     <div class="product-action">

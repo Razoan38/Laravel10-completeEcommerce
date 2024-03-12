@@ -86,6 +86,11 @@ class Product extends Model
                         $return = $return->where('products.price','<=',$end_price );
                     }
 
+                     if(!empty(Request::get('q')))
+                      {
+                        $return = $return->where('products.title','like', '%'.Request::get('q').'%');
+                      }
+
                     $return = $return->where('products.is_delete','=', 0)
                     ->where('products.status','=', 0)
                     ->groupBy('products.id')
@@ -94,6 +99,27 @@ class Product extends Model
 
                     return $return;
     }
+
+    static public function getRelatedProduct($product_id, $subcategory_id)
+     {
+        $return = Product::select('products.*', 'users.name as created_by_name','categories.category_name as category_name',
+        'categories.category_slug as category_slug' ,'sub_categories.subcategory_name as sub_category_name',
+        'sub_categories.subcategory_slug as sub_category_slug')
+                    ->join('users','users.id','=','products.created_by')
+                    ->join('categories','categories.id','=','products.category_id')
+                    ->join('sub_categories','sub_categories.id','=','products.subcategory_id')
+                    ->where('products.id','!=', $product_id)
+                    ->where('products.subcategory_id','=', $subcategory_id)
+                    ->where('products.is_delete','=', 0)
+                    ->where('products.status','=', 0)
+                    ->groupBy('products.id')
+                    ->orderBy('products.id','desc')
+                    ->limit(10)
+                    ->get();
+
+                    return $return;
+     }
+
 
     static public function checkSlug($slug)
     {

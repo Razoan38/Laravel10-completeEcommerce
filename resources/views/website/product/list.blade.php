@@ -22,8 +22,10 @@
         		<div class="container">
                     @if (!empty($getSubCategory))
                             <h1 class="page-title">{{ $getSubCategory->subcategory_name }}</h1>
-                       @else 
+                       @elseif(!empty($getCategory)) 
                             <h1 class="page-title">{{ $getCategory->category_name }}</h1>
+							@else
+                            <h1 class="page-title"> Search for {{Request::get('q') }}</h1>
                     @endif
         			
         		</div><!-- End .container -->
@@ -37,7 +39,7 @@
                         @if (!empty($getSubCategory))
                         <li class="breadcrumb-item " aria-current="page"><a href="{{ url($getCategory->category_slug) }}">{{ $getCategory->category_name }}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $getSubCategory->subcategory_name }}</li>
-                        @else 
+						@elseif(!empty($getCategory)) 
                         <li class="breadcrumb-item active" aria-current="page">{{ $getCategory->category_name }}</li>
                         @endif
                     </ol>
@@ -86,6 +88,9 @@
 							<form action="" id="FilterForm" method="POST">
 								{{ csrf_field() }}
 
+								<input type="hidden" name="q" id=""
+								value="{{ !empty(Request::get('q')) ? Request::get('q') : '' }}" >
+								
 								<input type="hidden" name="old_category_id" id=""
 								value="{{ !empty($getCategory) ? $getCategory->id : '' }}" >
 								
@@ -100,12 +105,13 @@
 								<input type="hidden" name="start_price" id="get_start_price">
 								<input type="hidden" name="end_price" id="get_end_price">
 							</form>
+
                 			<div class="sidebar sidebar-shop">
                 				<div class="widget widget-clean">
                 					<label>Filters:</label>
                 					<a href="#" class="sidebar-filter-clear">Clean All</a>
                 				</div><!-- End .widget widget-clean -->
-
+                              @if (!empty($getSubCategoryFilter))
                 				<div class="widget widget-collapsible">
     								<h3 class="widget-title">
 									    <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
@@ -130,8 +136,9 @@
 										</div><!-- End .widget-body -->
 									</div><!-- End .collapse -->
         						</div><!-- End .widget -->
+								@endif
 
-        						<div class="widget widget-collapsible">
+        						{{-- <div class="widget widget-collapsible">
     								<h3 class="widget-title">
 									    <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2">
 									        Size
@@ -185,7 +192,7 @@
 											</div><!-- End .filter-items -->
 										</div><!-- End .widget-body -->
 									</div><!-- End .collapse -->
-        						</div><!-- End .widget -->
+        						</div><!-- End .widget --> --}}
 
         						<div class="widget widget-collapsible">
     								<h3 class="widget-title">

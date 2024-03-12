@@ -101,14 +101,18 @@ Route::group(['middleware' =>'admin'],function(){
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('search', [ProductFront::class, 'getProductSearch']);
 Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax'])->name('get_filter_product_ajax');
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
+// Route::post('search',[ProductFront::class,'getProductSearch'])->name('search');
 
 
-// 41 number video dakci error solution 
-// 0 m pojunto dakci video 
+
+
+// 45 number video dakci error solution 
+// 3 m pojunto video dakci  

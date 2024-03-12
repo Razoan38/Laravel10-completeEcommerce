@@ -11,7 +11,35 @@ use App\Models\SubCategories;
 
 class ProductsController extends Controller
 {
-     public function getCategory($category_slug,$subcategory_slug ='')
+    
+    public function getProductSearch(Request $request)
+    {
+       $data['meta_title']       = 'Search';
+       $data['meta_description'] = '';
+       $data['meta_keywords']    = '';
+
+       $getProduct = Product::getProduct();
+       
+       $page = 0;
+       if(!empty($getProduct->nextPageUrl())) 
+       {
+           $parse_url = parse_url($getProduct->nextPageUrl());
+         
+           if(!empty($parse_url['query']))
+           {
+               parse_str($parse_url['query'], $get_array);
+               $page = !empty($get_array['page']) ? $get_array['page'] : 0;
+           }
+       }
+       $data['page'] = $page;
+       $data['getProduct'] = $getProduct;
+       $data['getColor'] = color::getRecordActive();
+       $data['getBrand'] = Brand::getRecordActive();
+
+       return view('website.product.list', $data);
+    }
+
+     public function getCategory($category_slug, $subcategory_slug ='')
      {
 
         $getProductsingle= Product::getSingleslug($category_slug);
@@ -27,6 +55,8 @@ class ProductsController extends Controller
             $data['meta_description'] = $getProductsingle->short_description;
             
             $data['getProduct'] = $getProductsingle;
+            $data['getRelatedProduct'] = Product::getRelatedProduct($getProductsingle->id, 
+            $getProductsingle->subcategory_id,);
 
             return view('website.product.detail',$data);
         }
@@ -116,4 +146,6 @@ class ProductsController extends Controller
          ])->render(),
         ],200);
      }
+
+     
 }

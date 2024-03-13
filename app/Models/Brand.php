@@ -10,7 +10,7 @@ class Brand extends Model
     use HasFactory;
     protected $table='brands';
 
-    static public function getSingle($id)
+     public static function getSingle($id)
     {
         return self::find($id);
     }

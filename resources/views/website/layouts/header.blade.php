@@ -172,63 +172,62 @@
                 <div class="dropdown cart-dropdown">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                         <i class="icon-shopping-cart"></i>
-                        <span class="cart-count">2</span>
+                        <span class="cart-count">{{ Cart::getContent()->count() }}</span>
                     </a>
-
+                 @if (!empty( Cart::getContent()->count()))
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-cart-products">
+                           @foreach (Cart::getContent() as $header_cart )
+                           @php
+                               $getCartProduct = App\Models\Product::getSingle($header_cart->id);
+                            
+                           @endphp
+
+                           @if (!empty( $getProductimage ))
+
+                           @php
+                             
+                               $getProductimage = $getCartProduct->getSingleimage($getCartProduct->id)
+                           @endphp
+
                             <div class="product">
                                 <div class="product-cart-details">
                                     <h4 class="product-title">
-                                        <a href="product.html">Beige knitted elastic runner shoes</a>
+                                        <a href="{{ url($getCartProduct->slug) }}">
+                                            {{ $getCartProduct->title }}</a>
                                     </h4>
 
                                     <span class="cart-product-info">
-                                        <span class="cart-product-qty">1</span>
-                                        x $84.00
+                                        <span class="cart-product-qty">{{ $header_cart->quantity }}</span>
+                                        x ${{ number_format($header_cart->price , 2) }}
                                     </span>
                                 </div><!-- End .product-cart-details -->
 
                                 <figure class="product-image-container">
                                     <a href="product.html" class="product-image">
-                                        <img src="{{asset('/')}}website/assets/images/products/cart/product-1.jpg" alt="product">
+                                        <img src="{{ $getProductimage->getimageshow() }}" alt="product">
                                     </a>
                                 </figure>
                                 <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
                             </div><!-- End .product -->
 
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">Blue utility pinafore denim dress</a>
-                                    </h4>
-
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1</span>
-                                        x $76.00
-                                    </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="{{asset('/')}}website/assets/images/products/cart/product-2.jpg" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                            </div>
+                            @endif
+                            @endforeach 
+                    
                         </div><!-- End .cart-product -->
 
                         <div class="dropdown-cart-total">
                             <span>Total</span>
 
-                            <span class="cart-total-price">$160.00</span>
+                            <span class="cart-total-price">{{ number_format(Cart::getSubTotal(), 2) }}</span>
                         </div><!-- End .dropdown-cart-total -->
 
                         <div class="dropdown-cart-action">
-                            <a href="cart.html" class="btn btn-primary">View Cart</a>
-                            <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                            <a href="{{ route('payment.carts') }}" class="btn btn-primary">View Cart</a>
+                            <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
                         </div>
                     </div>
+                 @endif
                 </div>
             </div>
         </div>

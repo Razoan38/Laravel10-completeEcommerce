@@ -11,10 +11,11 @@ class Product extends Model
     use HasFactory;
     protected $table='products';
 
-    static public function getSingle($id)
+     public static function getSingle($id)
     {
         return self::find($id);
     }
+    
     static public function getRecord()
     {
         return self::select('products.*', 'users.name as created_by_name')

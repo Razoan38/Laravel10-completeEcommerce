@@ -25,8 +25,8 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ $getProduct->title }} </li>
             </ol>
 
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
+        </div>
+    </nav>
 
     <div class="page-content">
         <div class="container">
@@ -59,9 +59,9 @@
                                 @endforeach
                               
 
-                            </div><!-- End .product-image-gallery -->
+                            </div>
                         </div>
-                    </div><!-- End .col-md-6 --> --}}
+                    </div> --}}
 
                     <div class="col-md-6">
                         <div class="product-gallery">
@@ -76,7 +76,7 @@
                                     <i class="icon-arrows"></i>
                                 </a>
                                 @endif
-                            </figure><!-- End .product-main-image -->
+                            </figure>
 
                             <div id="product-zoom-gallery" class="product-image-gallery">
                                 @foreach ($getProduct->getimage as $image )
@@ -86,7 +86,7 @@
                                 @endforeach             
                             </div>
                         </div>
-                    </div><!-- End .col-md-6 -->
+                    </div>
 
                     <div class="col-md-6">
                         <div class="product-details">
@@ -95,24 +95,27 @@
                             <div class="ratings-container">
                                 <div class="ratings">
                                     <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
+                                </div>
                                 <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                            </div><!-- End .rating-container -->
+                            </div>
 
                             <div class="product-price">
                               <span id="getTotalPrice">${{number_format($getProduct->price , 2)}}</span>
-                            </div><!-- End .product-price -->
+                            </div>
 
                             <div class="product-content">
                                 <p>{{ $getProduct->short_description }} </p>
-                            </div><!-- End .product-content -->
+                            </div>
 
+                       <form  action="{{ url('product/add-to-cart') }}" method="POST">
+                            {{ csrf_field() }}
                             
+                            <input type="hidden" name="product_id"  value="{{ $getProduct->id }}">
                            @if (!empty($getProduct->getColor->count()))
                             <div class="details-filter-row details-row-size">
                                 <label for="size">Color:</label>
                                 <div class="select-custom">
-                                    <select name="size" id="size" class="form-control">
+                                    <select name="color_id" id="color" required class="form-control">
                                         <option value="#" selected="selected">Select a Color</option>
                                      @foreach ( $getProduct->getColor as $Color)
                                         <option value="{{$Color->getColor->id}}">
@@ -120,14 +123,14 @@
                                      @endforeach
                                     </select>
                                 </div>
-                            </div><!-- End .details-filter-row -->
+                            </div>
                                 @endif
                                 
                            @if (!empty($getProduct->getSize->count()))
                             <div class="details-filter-row details-row-size">
                                 <label for="size">Size:</label>
                                 <div class="select-custom">
-                                    <select name="size" id="size" class="form-control getSizePrice">
+                                    <select name="size_id" id="size" required class="form-control getSizePrice">
                                         <option  data-price="0" value="#" selected="selected">Select a Color</option>
                                             @foreach ( $getProduct->getSize as $Size)
                                                 <option data-price="{{ !empty($Size->price) ? $Size->price : 0}}" value="{{$Size->id}}">{{$Size->name}}  
@@ -136,25 +139,26 @@
                                             @endforeach
                                     </select>
                                 </div>
-                             </div><!-- End .details-filter-row -->
+                             </div>
                             @endif
                            
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Qty:</label>
                                 <div class="product-details-quantity">
-                                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                </div><!-- End .product-details-quantity -->
-                            </div><!-- End .details-filter-row -->
+                                    <input type="number" id="qty" name="qty" required class="form-control" 
+                                    value="1" min="1" max="100" step="1" data-decimals="0" required>
+                                </div>
+                            </div>
 
                             <div class="product-details-action">
-                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-
+                                  <button class="btn-product btn-cart" type="submit"
+                                  style="background: #fff; color: #c96">add to cart</button>
                                 <div class="details-action-wrapper">
                                     <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                                     {{-- <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a> --}}
-                                </div><!-- End .details-action-wrapper -->
-                            </div><!-- End .product-details-action -->
-
+                                </div>
+                            </div>
+                        </form>
                             <div class="product-details-footer">
                                 <div class="product-cat">
                                     <span>Category:</span>
@@ -172,12 +176,12 @@
                                     <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
                                     <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
                                 </div> --}}
-                            </div><!-- End .product-details-footer -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .col-md-6 -->
-                </div><!-- End .row -->
-            </div><!-- End .product-details-top -->
-        </div><!-- End .container -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="product-details-tab product-details-extended">
             <div class="container">
@@ -195,28 +199,28 @@
                         <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
                     </li> --}}
                 </ul>
-            </div><!-- End .container -->
+            </div>
 
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                     <div class="container" style="margin-top: 20px">
                       {!! $getProduct->description !!}
-                    </div><!-- End .container -->
-                </div><!-- .End .tab-pane -->
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
                     <div class="product-desc-content">
                         <div class="container" style="margin-top: 20px">
                             {!! $getProduct->additional_information	 !!}
-                        </div><!-- End .container -->
-                    </div><!-- End .product-desc-content -->
-                </div><!-- .End .tab-pane -->
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
                     <div class="product-desc-content">
                         <div class="container" style="margin-top: 20px">
                             {!! $getProduct->shipping_returns !!}
-                        </div><!-- End .container -->
-                    </div><!-- End .product-desc-content -->
-                </div><!-- .End .tab-pane -->
+                        </div>
+                    </div>
+                </div>
                 {{-- <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
                     <div class="reviews">
                         <div class="container">
@@ -275,11 +279,11 @@
                         </div><!-- End .container -->
                     </div><!-- End .reviews -->
                 </div><!-- .End .tab-pane --> --}}
-            </div><!-- End .tab-content -->
-        </div><!-- End .product-details-tab -->
+            </div>
+        </div>
 
         <div class="container">
-            <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+            <h2 class="title text-center mb-4">You May Also Like</h2>
             <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                 data-owl-options='{
                     "nav": false, 
@@ -326,18 +330,18 @@
                         </div>
 
                         <div class="product-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                            <a href="{{ route('payment.cart') }}" class="btn-product btn-cart"><span>add to 00cart</span></a>
                         </div>
                     </figure>
 
                     <div class="product-body">
                         <div class="product-cat">
                             <a href="{{ url($product->category_slug.'/'.$product->sub_category_slug ) }}">{{ $product->sub_category_name }}</a>
-                        </div><!-- End .product-cat -->
+                        </div>
                         <h3 class="product-title"><a href="{{ url($product->slug) }}">{{ $product->title }}</a></h3>
                         <div class="product-price">
                             ${{ number_format($product->price, 2) }}
-                        </div><!-- End .product-price -->
+                        </div>
                         <div class="ratings-container">
                             <div class="ratings">
                                 <div class="ratings-val" style="width: 20%;"></div>
@@ -352,10 +356,10 @@
                 @endforeach
 
       
-            </div><!-- End .owl-carousel -->
-        </div><!-- End .container -->
-    </div><!-- End .page-content -->
-</main><!-- End .main -->
+            </div>
+        </div>
+    </div>
+</main>
 
 @endsection
 

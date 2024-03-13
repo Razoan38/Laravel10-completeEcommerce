@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\admin\ColorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController as ProductFront;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,10 +110,15 @@ Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('search', [ProductFront::class, 'getProductSearch']);
 Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax'])->name('get_filter_product_ajax');
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
-// Route::post('search',[ProductFront::class,'getProductSearch'])->name('search');
+
+Route::get('payment-carts',[PaymentController::class,'carts'])->name('payment.carts');
+
+// Route::get('payment-cart',[PaymentController::class,'cart'])->name('website.payment.cart');
+Route::post('product/add-to-cart', [PaymentController::class,'add_to_cart']);
 
 
 
 
-// 45 number video dakci error solution 
-// 3 m pojunto video dakci  
+
+// 47 number video dakci error solution 
+// 0 m pojunto video dakci  

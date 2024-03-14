@@ -15,4 +15,9 @@ class HomeController extends Controller
 
        return view('website.home.index', $data);
      }
+
+    //   public function carts()
+    //  {
+    //   return view('website.product.cart');  
+    //  }
 }

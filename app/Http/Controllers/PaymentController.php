@@ -13,10 +13,16 @@ use function PHPUnit\Framework\returnSelf;
 
 class PaymentController extends Controller
 {
-    public function carts(Request $request)
-    {
-        return view('website.payment.cart');
-    }
+        public function carts(Request $request)
+        {
+            
+       $data['meta_title']       = 'cart';
+       $data['meta_description'] = '';
+       $data['meta_keywords']    = '';
+
+        return view('website.payment.cart', $data);  
+        }
+
 
     public function add_to_cart(Request $request) 
     {
@@ -48,5 +54,25 @@ class PaymentController extends Controller
          ]);
 
           return redirect()->back();
+    }
+public function update_cart(Request $request)
+{
+    foreach ($request->cart as $cart) {
+        Cart::update($cart['id'], [
+            'quantity' => [
+                'relative' => false,
+                'value' => $cart['qty'],
+            ],
+        ]);
+    }
+
+    return redirect()->back();
+}
+
+
+    public function carts_delete($id)
+    {
+       Cart::remove($id);
+       return redirect()->back();
     }
 }

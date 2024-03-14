@@ -174,7 +174,7 @@
                         <i class="icon-shopping-cart"></i>
                         <span class="cart-count">{{ Cart::getContent()->count() }}</span>
                     </a>
-                 @if (!empty( Cart::getContent()->count()))
+                 @if(!empty( Cart::getContent()->count()))
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-cart-products">
                            @foreach (Cart::getContent() as $header_cart )
@@ -184,10 +184,9 @@
                            @endphp
 
                            @if (!empty( $getProductimage ))
-
                            @php
                              
-                               $getProductimage = $getCartProduct->getSingleimage($getCartProduct->id)
+                               $getProductimage = $getCartProduct->getSingleimage($getCartProduct->id);
                            @endphp
 
                             <div class="product">
@@ -208,7 +207,7 @@
                                         <img src="{{ $getProductimage->getimageshow() }}" alt="product">
                                     </a>
                                 </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                <a href="{{ url('payment/carts/delete/'.$header_cart->id) }}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
                             </div><!-- End .product -->
 
                             @endif
@@ -223,7 +222,7 @@
                         </div><!-- End .dropdown-cart-total -->
 
                         <div class="dropdown-cart-action">
-                            <a href="{{ route('payment.carts') }}" class="btn btn-primary">View Cart</a>
+                            <a href="{{ url('payment/carts') }}" class="btn btn-primary">View Cart</a>
                             <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
                         </div>
                     </div>

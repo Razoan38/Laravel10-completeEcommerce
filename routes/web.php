@@ -107,18 +107,21 @@ Route::group(['middleware' =>'admin'],function(){
 // });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+ Route::get('payment/carts',[HomeController::class,'carts']);
 Route::get('search', [ProductFront::class, 'getProductSearch']);
 Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax'])->name('get_filter_product_ajax');
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
 
-Route::get('payment-carts',[PaymentController::class,'carts'])->name('payment.carts');
-
-// Route::get('payment-cart',[PaymentController::class,'cart'])->name('website.payment.cart');
+//Route::get('payment/carts',[PaymentController::class,'carts'])->name('payment.carts');
+Route::get('payment/carts',[PaymentController::class,'carts']);
 Route::post('product/add-to-cart', [PaymentController::class,'add_to_cart']);
+Route::get('payment/carts/delete/{id}',[PaymentController::class,'carts_delete']);
+Route::post('update_cart',[PaymentController::class,'update_cart']);
 
 
 
 
 
-// 47 number video dakci error solution 
+
+// 49 number video dakci error solution 
 // 0 m pojunto video dakci  

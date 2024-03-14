@@ -330,7 +330,7 @@
                         </div>
 
                         <div class="product-action">
-                            <a href="{{ route('payment.cart') }}" class="btn-product btn-cart"><span>add to 00cart</span></a>
+                            <a href="{{ url('payment/carts') }}" class="btn-product btn-cart"><span>add to cart</span></a>
                         </div>
                     </figure>
 

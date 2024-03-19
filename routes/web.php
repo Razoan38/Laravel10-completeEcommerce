@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\admin\ColorController;
+use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController as ProductFront;
 use App\Http\Controllers\PaymentController;
@@ -76,6 +77,7 @@ Route::group(['middleware' =>'admin'],function(){
     Route::get('admin/color/edit/{id}',[ColorController::class,'edit'])->name('color.edit');
     Route::post('admin/color/edit/{id}',[ColorController::class,'update'])->name('color.update');
     Route::get('admin/color/delate/{id}',[ColorController::class,'delate'])->name('color.delate');
+    
 
    // product
     Route::get('admin/product/list',[ProductController::class,'list'])->name('admin.product.list');
@@ -88,6 +90,13 @@ Route::group(['middleware' =>'admin'],function(){
     Route::get('admin/product/image_delate/{id}',[ProductController::class,'image_delate'])->name('admin.product.image_delate');
 
     Route::post('admin/product_sortable_image',[ProductController::class,'product_sortable_image'])->name('admin.product_sortable_image');
+
+    Route::get('admin/discount_code/list',[DiscountCodeController::class,'list'])->name('admin.discount_code.list');
+    Route::get('admin/discount_code/add',[DiscountCodeController::class,'add'])->name('discount_code.add');
+    Route::post('admin/discount_code/add',[DiscountCodeController::class,'insert']);
+    Route::get('admin/discount_code/edit/{id}',[DiscountCodeController::class,'edit'])->name('discount_code.edit');
+    Route::post('admin/discount_code/edit/{id}',[DiscountCodeController::class,'update'])->name('discount_code.update');
+    Route::get('admin/discount_code/delate/{id}',[DiscountCodeController::class,'delate'])->name('discount_code.delate');
 
     // Route::get('admin/dashboard', function () {
     //     return view('admin.dashboard');
@@ -108,6 +117,7 @@ Route::group(['middleware' =>'admin'],function(){
 
 Route::get('/',[HomeController::class,'index'])->name('home');
  Route::get('payment/carts',[HomeController::class,'carts']);
+ Route::get('checkout',[HomeController::class,'checkout']);
 Route::get('search', [ProductFront::class, 'getProductSearch']);
 Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax'])->name('get_filter_product_ajax');
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
@@ -117,11 +127,12 @@ Route::get('payment/carts',[PaymentController::class,'carts']);
 Route::post('product/add-to-cart', [PaymentController::class,'add_to_cart']);
 Route::get('payment/carts/delete/{id}',[PaymentController::class,'carts_delete']);
 Route::post('update_cart',[PaymentController::class,'update_cart']);
+Route::get('checkout',[PaymentController::class,'checkout']);
 
 
 
 
 
 
-// 49 number video dakci error solution 
+// 51 number video dakci error solution 
 // 0 m pojunto video dakci  

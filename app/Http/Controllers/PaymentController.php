@@ -13,6 +13,15 @@ use function PHPUnit\Framework\returnSelf;
 
 class PaymentController extends Controller
 {
+        public function checkout(Request $request)
+        {
+            
+       $data['meta_title']       = 'Checkout';
+       $data['meta_description'] = '';
+       $data['meta_keywords']    = '';
+
+        return view('website.payment.checkout', $data);  
+        }
         public function carts(Request $request)
         {
             

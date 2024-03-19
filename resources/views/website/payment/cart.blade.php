@@ -96,17 +96,7 @@
                                   </table>
 
                                   <div class="cart-bottom">
-                                      <div class="cart-discount">
-
-                                          <div class="input-group">
-                                              <input type="text" class="form-control"  placeholder="coupon code">
-                                              <div class="input-group-append">
-                                                  <button type="button" class="btn btn-outline-primary-2" type="submit"><i
-                                                          class="icon-long-arrow-right"></i></button>
-                                              </div>
-                                          </div>
-
-                                      </div>
+                                      
 
                                       <button type="submit" class="btn btn-outline-dark-2"><span>UPDATE
                                               CART</span><i class="icon-refresh"></i></button>
@@ -129,41 +119,6 @@
                                                   <td>&nbsp;</td>
                                               </tr>
 
-                                              <tr class="summary-shipping-row">
-                                                  <td>
-                                                      <div class="custom-control custom-radio">
-                                                          <input type="radio" id="free-shipping" name="shipping"
-                                                              class="custom-control-input">
-                                                          <label class="custom-control-label" for="free-shipping">Free
-                                                              Shipping</label>
-                                                      </div>
-                                                  </td>
-                                                  <td>$0.00</td>
-                                              </tr>
-
-                                              <tr class="summary-shipping-row">
-                                                  <td>
-                                                      <div class="custom-control custom-radio">
-                                                          <input type="radio" id="standart-shipping" name="shipping"
-                                                              class="custom-control-input">
-                                                          <label class="custom-control-label"
-                                                              for="standart-shipping">Standart:</label>
-                                                      </div>
-                                                  </td>
-                                                  <td>$0.00</td>
-                                              </tr>
-
-                                              <tr class="summary-shipping-row">
-                                                  <td>
-                                                      <div class="custom-control custom-radio">
-                                                          <input type="radio" id="express-shipping" name="shipping"
-                                                              class="custom-control-input">
-                                                          <label class="custom-control-label"
-                                                              for="express-shipping">Express:</label>
-                                                      </div>
-                                                  </td>
-                                                  <td>$0.00</td>
-                                              </tr>
 
                                               {{-- <tr class="summary-shipping-estimate">
                         <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
@@ -177,7 +132,7 @@
                                           </tbody>
                                       </table>
 
-                                      <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED
+                                      <a href="{{ url('checkout') }}" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED
                                           TO CHECKOUT</a>
                                   </div>
 

@@ -211,13 +211,21 @@
                  
                 </p>
               </a>
-          </li>
+            </li>
 
             <li class="nav-item">
                 <a href="{{ route('admin.product.list') }}" class="nav-link @if(Request::segment(2) == 'product') active @endif">
                     <i class="nav-icon fas  fa-list-alt"></i>
                   <p>
                     Product 
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.discount_code.list') }}" class="nav-link @if(Request::segment(2) == 'discount_code') active @endif">
+                    <i class="nav-icon fas  fa-list-alt"></i>
+                  <p>
+                    Discount Code 
                   </p>
                 </a>
             </li>

@@ -4,7 +4,7 @@
   
 @endsection
 @section('title')
-  Color Page 
+Color Page 
 @endsection
 @section('content')
 <div class="content-wrapper">

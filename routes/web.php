@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\admin\ColorController;
 use App\Http\Controllers\Admin\DiscountCodeController;
+use App\Http\Controllers\Admin\ShippingChargeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController as ProductFront;
 use App\Http\Controllers\PaymentController;
@@ -98,6 +99,13 @@ Route::group(['middleware' =>'admin'],function(){
     Route::post('admin/discount_code/edit/{id}',[DiscountCodeController::class,'update'])->name('discount_code.update');
     Route::get('admin/discount_code/delate/{id}',[DiscountCodeController::class,'delate'])->name('discount_code.delate');
 
+    Route::get('admin/shipping_charge/list',[ShippingChargeController::class,'list'])->name('admin.shipping_charge.list');
+    Route::get('admin/shipping_charge/add',[ShippingChargeController::class,'add'])->name('shipping_charge.add');
+    Route::post('admin/shipping_charge/add',[ShippingChargeController::class,'insert']);
+    Route::get('admin/shipping_charge/edit/{id}',[ShippingChargeController::class,'edit'])->name('shipping_charge.edit');
+    Route::post('admin/shipping_charge/edit/{id}',[ShippingChargeController::class,'update'])->name('shipping_charge.update');
+    Route::get('admin/shipping_charge/delate/{id}',[ShippingChargeController::class,'delate'])->name('shipping_charge.delate');
+
     // Route::get('admin/dashboard', function () {
     //     return view('admin.dashboard');
     // });
@@ -127,12 +135,15 @@ Route::get('payment/carts',[PaymentController::class,'carts']);
 Route::post('product/add-to-cart', [PaymentController::class,'add_to_cart']);
 Route::get('payment/carts/delete/{id}',[PaymentController::class,'carts_delete']);
 Route::post('update_cart',[PaymentController::class,'update_cart']);
+
 Route::get('checkout',[PaymentController::class,'checkout']);
 
+Route::post('checkout/apply_discount_code',[PaymentController::class,'apply_discount_code']);
 
 
 
 
 
-// 51 number video dakci error solution 
+
+// 53 number video dakci error solution 
 // 0 m pojunto video dakci  

@@ -5,11 +5,11 @@
 @endsection
 
 @section('title')
-    Edit Color
+    Add New Shipping Charge
 @endsection
 @section('content')
 <div class="content-wrapper">
-
+      
   
 
       <section class="content">
@@ -20,36 +20,38 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Edit brand</h3>
+                  <h3 class="card-title">Add New discount Code</h3>
                 </div>
                 <form action="" method="POST">
                     {{ csrf_field() }}
                   <div class="card-body">
 
                     <div class="form-group">
-                      <label> Color Name <span style="color: red">*</span></label>
-                      <input type="text" class="form-control"  value="{{ old('color_name',$getRecord->color_name) }}"  name="color_name" placeholder="Enter Color name">
+                      <label>Shipping Charges Name <span style="color: red">*</span></label>
+                      <input type="text" class="form-control"  value="{{ old('name') }}"  name="name" placeholder="Enter Chipping Charges Name">
                     </div>
 
-                    <div class="form-group">
-                        <label> Color Ccde <span style="color: red">*</span> </label>
-                        <input type="color" class="form-control"  value="{{ old('color_code',$getRecord->color_code) }}"  name="color_code" placeholder="Enter color_code">
-                       
+                     <div class="form-group">
+                        <label> Price <span style="color: red">*</span></label>
+                        <input type="number" class="form-control"  value="{{ old('price') }}"  name="price" placeholder="Enter Price ">
                       </div>
+
                     
                     <div class="form-group">
                       <label>Status <span style="color: red">*</span></label>
                       <select class="form-control" name="status">
-                         <option {{ (old('status',$getRecord->status) == 0) ? 'selected' : ''}} value="0">Active </option>
-                         <option {{ (old('status',$getRecord->status) == 1) ? 'selected' : ''}} value="1">Inactive</option>
+                         <option {{ (old('status') == 0) ? 'selected' : ''}} value="0">Active </option>
+                         <option {{ (old('status') == 1) ? 'selected' : ''}} value="1">Inactive</option>
                       </select>
                     </div>
 
+                    <hr>
+                    
                   </div>
                   <!-- /.card-body -->
   
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
               </div>

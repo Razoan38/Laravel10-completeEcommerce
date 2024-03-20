@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Edit Category
+    Edit  SubCategory
 @endsection
 @section('content')
 <div class="content-wrapper">

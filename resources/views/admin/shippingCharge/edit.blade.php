@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Edit Discount Code
+    Edit Shipping Charge 
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -20,33 +20,20 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Edit DiscountCode</h3>
+                  <h3 class="card-title">Edit Shipping Charge</h3>
                 </div>
                 <form action="" method="POST">
                     {{ csrf_field() }}
                   <div class="card-body">
 
                     <div class="form-group">
-                      <label> DiscountCode Name <span style="color: red">*</span></label>
-                      <input type="text" class="form-control"  value="{{ old('name',$getRecord->name) }}"  name="name" placeholder="Enter DiscountCode name">
-                    </div>
-
-                    <div class="form-group">
-                      <label>Type <span style="color: red">*</span></label>
-                      <select class="form-control" name="type" required>
-                         <option {{ (old('type',$getRecord->type) == 0) ? 'selected' : ''}} value="Amount">Amount </option>
-                         <option {{ (old('type',$getRecord->type) == 1) ? 'selected' : ''}} value="Precent">Precent</option>
-                      </select>
+                      <label> Shipping Charge Name <span style="color: red">*</span></label>
+                      <input type="text" class="form-control"  value="{{ old('name',$getRecord->name) }}"  name="name" placeholder="Enter Shipping Charge name">
                     </div>
 
                      <div class="form-group">
-                        <label> Precent / Amount <span style="color: red">*</span></label>
-                        <input type="text" class="form-control"  value="{{ old('precent_amount',$getRecord->precent_amount) }}"  name="precent_amount" placeholder="Enter Precent / Amount ">
-                      </div>
-
-                     <div class="form-group">
-                        <label> Expire Date <span style="color: red">*</span></label>
-                        <input type="date" class="form-control"  value="{{ old('expire_date',$getRecord->expire_date) }}"  name="expire_date" />
+                        <label>Price <span style="color: red">*</span></label>
+                        <input type="number" class="form-control"  value="{{ old('price',$getRecord->price) }}"  name="price" />
                       </div>
                     
                     <div class="form-group">

@@ -127,10 +127,10 @@
                                                         <div class="cart-discount">
 
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control"  placeholder="coupon code">
+                                                                <input type="text" id="getDiscountCode" class="form-control"  placeholder="Discount code">
                                                                 <div class="input-group-append">
                                                                     <button style="height: 38px" type="button" class="btn btn-outline-primary-2" type="submit"><i
-                                                                            class="icon-long-arrow-right"></i></button>
+                                                                          id="ApplyDiscount"  class="icon-long-arrow-right"></i></button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -139,7 +139,7 @@
                                                 
 		                						<tr class="summary-subtotal">
 		                							<td>Discount:</td>
-		                							<td>$ 0.00</td>
+		                							<td>$ <span id="getDiscountAmount">0.00</span></td>
 		                						</tr>
 		                						<tr>
 		                							<td>Shipping:</td>
@@ -147,7 +147,7 @@
 		                						</tr>
 		                						<tr class="summary-total">
 		                							<td>Total:</td>
-		                							<td>${{ number_format(Cart::getSubTotal(), 2) }}</td>
+		                							<td>$<span id="getPaybleTotal">{{ number_format(Cart::getSubTotal(), 2) }}</span></td>
 		                						</tr><!-- End .summary-total -->
 		                					</tbody>
 		                				</table>
@@ -215,4 +215,61 @@
 @endsection
 
 @section('script')
+
+<script>
+
+
+      $(document).ready(function() {
+            $('body').delegate('#ApplyDiscount', 'click', function() {
+                var discount_code = $('#getDiscountCode').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('checkout/apply_discount_code') }}",
+                    data: {
+                        discount_code: discount_code,
+                        "_token": "{{ csrf_token() }}",
+                    },
+					dataType: "json",
+                    success: function(data) {
+                         $('#getDiscountAmount').html(data.discount_amount)
+                         $('#getPaybleTotal').html(data.payble_total)
+                        if (data.status == false)
+						 {
+                            alert(data.message);
+                         } 
+                    },
+                    error: function(data) {
+                       
+                    }
+                });
+            });
+        });
+		
+	// $('body').delegate( '#ApplyDiscount', 'click', function() {
+	// 		var discount_code = $('#getDiscountCode').val();
+	// 	 $.ajax({
+	// 			type : "POST",
+	// 			url  :  "{{ url('checkout/apply_discount_code') }}",
+	// 			data :  {
+	// 				discount_code : discount_code,
+	// 				"_token": "{{ csrf_token() }}",
+	// 			},
+	// 			success  : function(data) {
+    //                 if(data.status == true)
+	// 				{
+
+	// 				} 
+	// 				else
+	// 				{
+	// 					alert(data.message);
+	// 				}
+	// 			},
+	// 			dataType : "json"
+	// 			error :   function(data) {
+
+	// 			}
+	// 		});
+
+	// 	});
+</script>
 @endsection

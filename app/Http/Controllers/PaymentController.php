@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductSize;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
+use App\Models\DiscountCode;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -83,5 +84,38 @@ public function update_cart(Request $request)
     {
        Cart::remove($id);
        return redirect()->back();
+    }
+
+    public function apply_discount_code(Request $request)
+    {
+        $getDiscount =   DiscountCode::CheckDiscount($request->discount_code);
+          if(!empty($getDiscount))
+          {
+            $total = Cart::getSubTotal();
+            if($getDiscount->type == 'Amount')
+            {
+                $discount_amount = $getDiscount->precent_amount;
+                $payble_total = $total - $getDiscount->precent_amount;
+            }
+            else
+            {
+                $discount_amount =($total * $getDiscount->precent_amount) / 100;
+                $payble_total = $total - $discount_amount;
+            }
+
+            $json['status'] =true ;
+            $json['discount_amount'] =number_format($discount_amount , 2) ;
+            $json['payble_total'] = number_format($payble_total, 2) ;
+            $json['message'] ="success" ;
+          }
+          else  
+          {
+            $json['status'] =false ;
+            $json['discount_amount'] = '0.00';
+            $json['payble_total'] = number_format(Cart::getSubTotal(), 2) ;
+            $json['message'] ="Discount Code Invalid" ;
+          }
+
+          echo json_encode($json);
     }
 }

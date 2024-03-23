@@ -124,6 +124,12 @@ Route::group(['middleware' =>'admin'],function(){
 // });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+
+//Email
+Route::post('auth_register',[AuthController::class,'auth_register'])->name('auth_register');
+Route::get('activate/{id}',[AuthController::class,'activate_email']);
+
+
  Route::get('payment/carts',[HomeController::class,'carts']);
  Route::get('checkout',[HomeController::class,'checkout']);
 Route::get('search', [ProductFront::class, 'getProductSearch']);
@@ -145,5 +151,5 @@ Route::post('checkout/apply_discount_code',[PaymentController::class,'apply_disc
 
 
 
-// 53 number video dakci error solution 
+// 54 number video dakci error solution 
 // 0 m pojunto video dakci  

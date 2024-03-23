@@ -110,19 +110,24 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                <form action="#">
+                                <form action="{{ url('auth_register') }}" id="SubmitFormRegister" method="POST">
+                                    {{ csrf_field() }}
                                     <div class="form-group">
-                                        <label for="register-email">Your email address *</label>
-                                        <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                        <label for="register-name">Name <Span style="color: red">*</Span></label>
+                                        <input type="text" class="form-control" id="register-name" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="register-email"> Email address <Span style="color: red">*</Span></label>
+                                        <input type="email" class="form-control" id="register-email" name="email" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="register-password">Password *</label>
-                                        <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                        <label for="register-password">Password <Span style="color: red">*</Span></label>
+                                        <input type="password" class="form-control" id="register-password" name="password" required>
                                     </div>
 
                                     <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2">
+                                        <button type="submit" value="submit" class="btn btn-outline-primary-2">
                                             <span>SIGN UP</span>
                                             <i class="icon-long-arrow-right"></i>
                                         </button>
@@ -201,6 +206,31 @@
 <script src="{{asset('/')}}website/assets/js/main.js"></script>
 
 @yield('script')
+
+<script>
+    $('body').delegate('#SubmitFormRegister', 'submit', function(e){
+        e.preventDefault();
+         $.ajax({
+				type : "POST",
+				url  :  "{{ url('auth_register') }}",
+				data :  $(this).serialize(),
+				dataType : "json",
+				success  : function(data) {
+                    alert(data.message);
+                    if(data.status == true)
+                    {
+                        location.reload();
+                    }
+				},
+				error :   function(data) {
+
+				}
+			});
+    });
+</script>
+
+
+
 </body>
 
 

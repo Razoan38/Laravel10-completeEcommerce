@@ -22,14 +22,14 @@ class ShippingCharge extends Model
                 ->orderBy('shipping_charges.id','desc')
                 ->paginate(20);
     }
-    // static public function CheckDiscount($discount_code)
-    // {
-    //     return self::select('shipping_charges.*')
-    //             ->where('discount_codes.is_delete','=', 0)
-    //             ->where('discount_codes.status','=', 0)
-    //             ->where('discount_codes.name','=', $discount_code)
-    //             ->where('discount_codes.expire_date','>=', date('Y-m-d'))
-    //             ->first();
-    // }
+    static public function getRecordActive()
+    {
+        return self::select('shipping_charges.*')
+                ->where('shipping_charges.is_delete','=', 0)
+                ->where('shipping_charges.status','=', 0)
+                ->orderBy('shipping_charges.id','asc')
+                ->get();
+    }
+   
 
 }

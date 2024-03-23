@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductSize;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use App\Models\DiscountCode;
+use App\Models\ShippingCharge;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -20,6 +21,7 @@ class PaymentController extends Controller
        $data['meta_title']       = 'Checkout';
        $data['meta_description'] = '';
        $data['meta_keywords']    = '';
+       $data['getShipping']      = ShippingCharge::getRecordActive();
 
         return view('website.payment.checkout', $data);  
         }
@@ -106,13 +108,14 @@ public function update_cart(Request $request)
             $json['status'] =true ;
             $json['discount_amount'] =number_format($discount_amount , 2) ;
             $json['payble_total'] = number_format($payble_total, 2) ;
+            $json['payble_total'] = $payble_total;
             $json['message'] ="success" ;
           }
           else  
           {
             $json['status'] =false ;
             $json['discount_amount'] = '0.00';
-            $json['payble_total'] = number_format(Cart::getSubTotal(), 2) ;
+            $json['payble_total'] =Cart::getSubTotal() ;
             $json['message'] ="Discount Code Invalid" ;
           }
 

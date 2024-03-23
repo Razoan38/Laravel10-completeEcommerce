@@ -141,17 +141,35 @@
 		                							<td>Discount:</td>
 		                							<td>$ <span id="getDiscountAmount">0.00</span></td>
 		                						</tr>
-		                						<tr>
-		                							<td>Shipping:</td>
-		                							<td>Free shipping</td>
-		                						</tr>
+		                						<tr class="summary-shipping">
+													<td>Shipping:</td>
+													<td>&nbsp;</td>
+												</tr>
+												@foreach ($getShipping as $Shipping )
+													
+												<tr class="summary-shipping-row">
+													<td>
+														<div class="custom-control custom-radio">
+															<input type="radio" id="free-shipping{{ $Shipping->id }}" name="shipping" 
+															data-price="{{ !empty($Shipping->price ) ? $Shipping->price : 0 }}" class="custom-control-input  getShippingCharge">
+															<label class="custom-control-label" for="free-shipping{{ $Shipping->id }}">{{ $Shipping->name }}</label>
+														</div>
+													</td>
+													<td>@if(!empty($Shipping->price))
+														${{ number_format($Shipping->price, 2) }}
+													@endif</td>
+												</tr>
+												@endforeach
+												
+	
 		                						<tr class="summary-total">
 		                							<td>Total:</td>
 		                							<td>$<span id="getPaybleTotal">{{ number_format(Cart::getSubTotal(), 2) }}</span></td>
 		                						</tr><!-- End .summary-total -->
 		                					</tbody>
 		                				</table>
-
+										<input type="hidden" id="getShippingChargeTotal" value="0">
+										<input type="hidden" id="PaybleTotal" value="{{ Cart::getSubTotal() }}">
 		                				<div class="accordion-summary" id="accordion-payment">
 									
 										    <div class="card">
@@ -218,6 +236,14 @@
 
 <script>
 
+       $('body').delegate( '.getShippingCharge', 'change', function() {
+			var price = $(this).attr('data-price');
+			var total = $('#PaybleTotal').val();
+			$('#getShippingChargeTotal').val(price);
+			var final_total = parseFloat(price) + parseFloat(total);
+			$('#getPaybleTotal').html(final_total.toFixed(2));
+		
+		});
 
       $(document).ready(function() {
             $('body').delegate('#ApplyDiscount', 'click', function() {
@@ -231,8 +257,11 @@
                     },
 					dataType: "json",
                     success: function(data) {
-                         $('#getDiscountAmount').html(data.discount_amount)
-                         $('#getPaybleTotal').html(data.payble_total)
+                         $('#getDiscountAmount').html(data.discount_amount);
+						 var shipping = $('#getShippingChargeTotal').val();
+						 var final_total = parseFloat(shipping) + parseFloat(data.payble_total);
+                         $('#getPaybleTotal').html(data.payble_total.toFixed(2));
+                         $('#PaybleTotal').val(data.payble_total);
                         if (data.status == false)
 						 {
                             alert(data.message);
@@ -244,7 +273,9 @@
                 });
             });
         });
+
 		
+
 	// $('body').delegate( '#ApplyDiscount', 'click', function() {
 	// 		var discount_code = $('#getDiscountCode').val();
 	// 	 $.ajax({

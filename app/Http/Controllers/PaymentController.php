@@ -121,4 +121,9 @@ public function update_cart(Request $request)
 
           echo json_encode($json);
     }
+
+    public function place_order(Request $request)
+    {
+        dd($request->all());
+    }
 }

@@ -66,15 +66,16 @@
                         </ul>
                         <div class="tab-content" id="tab-content-5">
                             <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                                <form action="#">
+                                <form action="" id="SubmitFormLogin" method="POST">
+                                    {{ csrf_field() }}    
                                     <div class="form-group">
-                                        <label for="singin-email">Username or email address *</label>
-                                        <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                        <label for="singin-email">Email address  <Span style="color: red">*</Span></label>
+                                        <input type="text" class="form-control" id="singin-email" name="email" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="singin-password">Password *</label>
-                                        <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                        <label for="singin-password">Password  <Span style="color: red">*</Span></label>
+                                        <input type="password" class="form-control" id="singin-password" name="password" required>
                                     </div>
 
                                     <div class="form-footer">
@@ -84,30 +85,14 @@
                                         </button>
 
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="signin-remember">
+                                            <input type="checkbox" name="is_remember" class="custom-control-input" id="signin-remember">
                                             <label class="custom-control-label" for="signin-remember">Remember Me</label>
                                         </div>
 
-                                        <a href="#" class="forgot-link">Forgot Your Password?</a>
+                                        <a href="{{ 'forgot-password' }}" class="forgot-link">Forgot Your Password?</a>
                                     </div>
                                 </form>
-                                <div class="form-choice">
-                                    <p class="text-center">or sign in with</p>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login btn-g">
-                                                <i class="icon-google"></i>
-                                                Login With Google
-                                            </a>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <a href="#" class="btn btn-login btn-f">
-                                                <i class="icon-facebook-f"></i>
-                                                Login With Facebook
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
                                 <form action="{{ url('auth_register') }}" id="SubmitFormRegister" method="POST">
@@ -208,6 +193,33 @@
 @yield('script')
 
 <script>
+
+    //Submit Form Login
+    $('body').delegate('#SubmitFormLogin', 'submit', function(e){
+        e.preventDefault();
+         $.ajax({
+				type : "POST",
+				url  :  "{{ url('auth_login') }}",
+				data :  $(this).serialize(),
+				dataType : "json",
+				success  : function(data) {
+                   
+                    if(data.status == true)
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
+				},
+				error :   function(data) {
+
+				}
+			});
+    });
+    
+//Submit Form Register
     $('body').delegate('#SubmitFormRegister', 'submit', function(e){
         e.preventDefault();
          $.ajax({

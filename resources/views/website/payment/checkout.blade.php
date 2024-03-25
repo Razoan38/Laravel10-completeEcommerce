@@ -28,71 +28,67 @@
             	<div class="checkout">
 	                <div class="container">
             			
-            			<form action="#">
+            			<form action="{{ url('checkout/place_order') }}" method="POST">
+							{{ csrf_field() }}   
 		                	<div class="row">
 		                		<div class="col-lg-9">
 		                			<h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
 		                				<div class="row">
 		                					<div class="col-sm-6">
 		                						<label>First Name *</label>
-		                						<input type="text" class="form-control" required>
+		                						<input type="text" name="first_name" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 
 		                					<div class="col-sm-6">
 		                						<label>Last Name *</label>
-		                						<input type="text" class="form-control" required>
+		                						<input type="text" name="last_name" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 		                				</div><!-- End .row -->
 
 	            						<label>Company Name (Optional)</label>
-	            						<input type="text" class="form-control">
+	            						<input type="text"  name="company_name" class="form-control">
 
 	            						<label>Country *</label>
-	            						<input type="text" class="form-control" required>
+	            						<input type="text" name="country" class="form-control" required>
 
 	            						<label>Street address *</label>
-	            						<input type="text" class="form-control" placeholder="House number and Street name" required>
-	            						<input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
+	            						<input type="text" name="address_one" class="form-control" placeholder="House number and Street name" required>
+	            						<input type="text" name="address_two" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
 
 	            						<div class="row">
 		                					<div class="col-sm-6">
 		                						<label>Town / City *</label>
-		                						<input type="text" class="form-control" required>
+		                						<input type="text" name="city" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 
 		                					<div class="col-sm-6">
 		                						<label>State / County *</label>
-		                						<input type="text" class="form-control" required>
+		                						<input type="text" name="state" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 		                				</div><!-- End .row -->
 
 		                				<div class="row">
 		                					<div class="col-sm-6">
 		                						<label>Postcode / ZIP *</label>
-		                						<input type="text" class="form-control" required>
+		                						<input type="text" name="postcode" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 
 		                					<div class="col-sm-6">
 		                						<label>Phone *</label>
-		                						<input type="tel" class="form-control" required>
+		                						<input type="tel" name="phone" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 		                				</div><!-- End .row -->
 
 	                					<label>Email address *</label>
-	        							<input type="email" class="form-control" required>
+	        							<input type="email" name="email" class="form-control" required>
 
 	        							<div class="custom-control custom-checkbox">
 											<input type="checkbox" class="custom-control-input" id="checkout-create-acc">
 											<label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
 										</div><!-- End .custom-checkbox -->
 
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-											<label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-										</div><!-- End .custom-checkbox -->
-
 	                					<label>Order notes (optional)</label>
-	        							<textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+	        							<textarea class="form-control" name="order_note" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
 		                		</div><!-- End .col-lg-9 -->
 		                		<aside class="col-lg-3">
 		                			<div class="summary">
@@ -127,7 +123,7 @@
                                                         <div class="cart-discount">
 
                                                             <div class="input-group">
-                                                                <input type="text" id="getDiscountCode" class="form-control"  placeholder="Discount code">
+                                                                <input type="text" name="discount_code" id="getDiscountCode" class="form-control"  placeholder="Discount code">
                                                                 <div class="input-group-append">
                                                                     <button style="height: 38px" type="button" class="btn btn-outline-primary-2" type="submit"><i
                                                                           id="ApplyDiscount"  class="icon-long-arrow-right"></i></button>
@@ -150,8 +146,8 @@
 												<tr class="summary-shipping-row">
 													<td>
 														<div class="custom-control custom-radio">
-															<input type="radio" id="free-shipping{{ $Shipping->id }}" name="shipping" 
-															data-price="{{ !empty($Shipping->price ) ? $Shipping->price : 0 }}" class="custom-control-input  getShippingCharge">
+															<input type="radio" value="{{ $Shipping->id }}" id="free-shipping{{ $Shipping->id }}" name="shipping" 
+															data-price="{{ !empty($Shipping->price ) ? $Shipping->price : 0 }}" class="custom-control-input  getShippingCharge" required>
 															<label class="custom-control-label" for="free-shipping{{ $Shipping->id }}">{{ $Shipping->name }}</label>
 														</div>
 													</td>
@@ -171,64 +167,41 @@
 										<input type="hidden" id="getShippingChargeTotal" value="0">
 										<input type="hidden" id="PaybleTotal" value="{{ Cart::getSubTotal() }}">
 		                				<div class="accordion-summary" id="accordion-payment">
-									
-										    <div class="card">
-										        <div class="card-header" id="heading-3">
-										            <h2 class="card-title">
-										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
-										                    Cash on delivery
-										                </a>
-										            </h2>
-										        </div><!-- End .card-header -->
-										        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-										            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
-										            </div><!-- End .card-body -->
-										        </div><!-- End .collapse -->
-										    </div><!-- End .card -->
+									         
+											<div class="custom-control custom-radio">
+												<input type="radio" value="cash" id="cashOnDelivery" name="payment_method" 
+												class="custom-control-input" required>
+												<label class="custom-control-label" for="cashOnDelivery">Cash on delivery</label>
+											</div>
 
-										    <div class="card">
-										        <div class="card-header" id="heading-4">
-										            <h2 class="card-title">
-										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-										                    PayPal <small class="float-right paypal-link">What is PayPal?</small>
-										                </a>
-										            </h2>
-										        </div><!-- End .card-header -->
-										        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-payment">
-										            <div class="card-body">
-										                Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-										            </div><!-- End .card-body -->
-										        </div><!-- End .collapse -->
-										    </div><!-- End .card -->
+											<div class="custom-control custom-radio" style="margin-top: 0px">
+												<input type="radio" value="payPal" id="PayPal" name="payment_method" 
+												class="custom-control-input  " required>
+												<label class="custom-control-label" for="PayPal">PayPal</label>
+											</div>
 
-										    <div class="card">
-										        <div class="card-header" id="heading-5">
-										            <h2 class="card-title">
-										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-5" aria-expanded="false" aria-controls="collapse-5">
-										                    Credit Card (Stripe)
-										                    <img src="{{asset('/')}}website/assets/images/payments-summary.png" alt="payments cards">
-										                </a>
-										            </h2>
-										        </div><!-- End .card-header -->
-										        <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#accordion-payment">
-										            <div class="card-body"> Donec nec justo eget felis facilisis fermentum.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Lorem ipsum dolor sit ame.
-										            </div><!-- End .card-body -->
-										        </div><!-- End .collapse -->
-										    </div><!-- End .card -->
-										</div><!-- End .accordion -->
+											<div class="custom-control custom-radio" style="margin-top: 0px">
+												<input type="radio" value="card" id="creditCard" name="payment_method" 
+												class="custom-control-input" required>
+												<label class="custom-control-label" for="creditCard">Credit Card (Stripe)</label>
+											</div>
+
+										</div>
 
 		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
 		                					<span class="btn-text">Place Order</span>
 		                					<span class="btn-hover-text">Proceed to Checkout</span>
 		                				</button>
-		                			</div><!-- End .summary -->
-		                		</aside><!-- End .col-lg-3 -->
-		                	</div><!-- End .row -->
+										<br/> <br/>
+										<img src="{{asset('/')}}website/assets/images/payments-summary.png" alt="payments cards">
+		                			</div>
+		                		</aside>
+		                	</div>
             			</form>
-	                </div><!-- End .container -->
-                </div><!-- End .checkout -->
-            </div><!-- End .page-content -->
-        </main><!-- End .main -->
+	                </div>
+                </div>
+            </div>
+        </main>
 
 @endsection
 

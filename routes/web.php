@@ -136,8 +136,8 @@ Route::get('reset/{token}',[AuthController::class,'reset']);
 Route::post('reset/{token}',[AuthController::class,'auth_reset']);
 
 
- Route::get('payment/carts',[HomeController::class,'carts']);
- Route::get('checkout',[HomeController::class,'checkout']);
+Route::get('payment/carts',[HomeController::class,'carts']);
+Route::get('checkout',[HomeController::class,'checkout']);
 Route::get('search', [ProductFront::class, 'getProductSearch']);
 Route::post('get_filter_product_ajax',[ProductFront::class,'getFilterProductAjax'])->name('get_filter_product_ajax');
 Route::get('{category_slug?}/{subcategory_slug?}',[ProductFront::class,'getCategory'])->name('category_slug');
@@ -157,5 +157,5 @@ Route::post('checkout/place_order',[PaymentController::class,'place_order']);
 
 
 
-// 59 number video dakci error solution 
+// 60 number video dakci error solution 
 // 0 m pojunto video dakci  

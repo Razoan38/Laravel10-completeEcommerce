@@ -135,7 +135,7 @@ Route::get('activate/{id}',[AuthController::class,'activate_email']);
 Route::get('reset/{token}',[AuthController::class,'reset']);
 Route::post('reset/{token}',[AuthController::class,'auth_reset']);
 
-
+Route::get('checkout/payment',[HomeController::class,'checkout_payment']);
 Route::get('payment/carts',[HomeController::class,'carts']);
 Route::get('checkout',[HomeController::class,'checkout']);
 Route::get('search', [ProductFront::class, 'getProductSearch']);
@@ -151,11 +151,14 @@ Route::post('update_cart',[PaymentController::class,'update_cart']);
 Route::get('checkout',[PaymentController::class,'checkout']);
 Route::post('checkout/apply_discount_code',[PaymentController::class,'apply_discount_code']);
 Route::post('checkout/place_order',[PaymentController::class,'place_order']);
+// Route::get('checkout/payment',[PaymentController::class,'checkout_payment']);
+
+Route::get('checkout/payment', [PaymentController::class, 'checkout_payment']);
 
 
 
 
 
 
-// 60 number video dakci error solution 
+// 63 number video dakci error solution 
 // 0 m pojunto video dakci  

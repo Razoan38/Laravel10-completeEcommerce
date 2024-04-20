@@ -28,7 +28,7 @@
             	<div class="checkout">
 	                <div class="container">
             			
-            			<form action="{{ url('checkout/place_order') }}" method="POST">
+            			<form action="" id="submitForm" method="POST">
 							{{ csrf_field() }}   
 		                	<div class="row">
 		                		<div class="col-lg-9">
@@ -82,10 +82,19 @@
 	                					<label>Email address *</label>
 	        							<input type="email" name="email" class="form-control" required>
 
+                                        @if(empty(Auth::check()))
+
 	        							<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="checkout-create-acc">
+											<input type="checkbox" name="is_create" class="custom-control-input createAccount" id="checkout-create-acc">
 											<label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
 										</div><!-- End .custom-checkbox -->
+
+										<div class="" id="showPassword" style="display: none">
+											<label>Password *</label>
+	        						     	<input type="text" id="inputPassword" name="password" class="form-control" >
+										</div>
+
+										@endif
 
 	                					<label>Order notes (optional)</label>
 	        							<textarea class="form-control" name="order_note" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
@@ -209,6 +218,19 @@
 
 <script>
 
+   $('body').delegate( '.createAccount', 'change', function() {
+        if(this.checked) 
+		{
+           $('#showPassword').show();
+		   $("#inputPassword").prop('required',true);
+		}
+		else
+		{
+			$('#showPassword').hide();
+			$("#inputPassword").prop('required',false);
+		}
+   });
+
        $('body').delegate( '.getShippingCharge', 'change', function() {
 			var price = $(this).attr('data-price');
 			var total = $('#PaybleTotal').val();
@@ -217,6 +239,57 @@
 			$('#getPaybleTotal').html(final_total.toFixed(2));
 		
 		});
+
+		// $('body').delegate( '#submitForm', 'submit',function(e) {
+        //   e.preventDefault();
+		//   $.ajax({
+		// 	type : "POST",
+		// 	url : "{{ url('checkout/place_order') }}",
+		// 	data : new FormData(this),
+		// 	processData :false,
+		// 	contentType:false,
+		// 	dataType :"json",
+		// 	success: function(data) {
+		// 		if(data.status == false)
+		// 				{
+		// 					alert(data.message);
+		// 				}
+		// 	},
+		// 	error: function (data) {
+
+		// 	}
+		//   });
+		// });
+
+
+
+
+		$('body').delegate('#submitForm', 'submit', function(e) {
+		e.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: "{{ url('checkout/place_order') }}",
+			data: new FormData(this),
+			processData: false,
+			contentType: false,
+			dataType: "json",
+			success: function(data) {
+				if(data.status == false) {
+					alert(data.message);
+				}
+				else 
+				{
+					window.location.href = data.redirect;
+				}
+			},
+			error: function (data) {
+				// Handle error response
+			}
+		});
+	});
+
+
+
 
       $(document).ready(function() {
             $('body').delegate('#ApplyDiscount', 'click', function() {

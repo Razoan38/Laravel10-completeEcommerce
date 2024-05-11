@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Admin\ShippingChargeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController as ProductFront;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SslCommerzPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,13 @@ Route::group(['middleware' =>'admin'],function(){
     Route::post('admin/admin/edit/{id}',[AdminController::class,'update'])->name('admin.update');
     Route::get('admin/admin/delate/{id}',[AdminController::class,'delate'])->name('admin.delate');
 
+    // orders
+    Route::get('admin/orders/list',[OrdersController::class,'list'])->name('admin.orders.list');
+    Route::get('admin/orders/detail/{id}',[OrdersController::class,'order_detail'])->name('orders.detail');
+    // Route::post('admin/orders/add',[OrdersController::class,'insert']);
+    // Route::get('admin/orders/edit/{id}',[OrdersController::class,'edit'])->name('orders.edit');
+    // Route::post('admin/orders/edit/{id}',[OrdersController::class,'update'])->name('orders.update');
+    // Route::get('admin/orders/delate/{id}',[OrdersController::class,'delate'])->name('orders.delate');
     // category
     Route::get('admin/category/list',[CategoryController::class,'list'])->name('admin.category.list');
     Route::get('admin/category/add',[CategoryController::class,'add'])->name('category.add');
@@ -151,14 +160,27 @@ Route::post('update_cart',[PaymentController::class,'update_cart']);
 Route::get('checkout',[PaymentController::class,'checkout']);
 Route::post('checkout/apply_discount_code',[PaymentController::class,'apply_discount_code']);
 Route::post('checkout/place_order',[PaymentController::class,'place_order']);
-// Route::get('checkout/payment',[PaymentController::class,'checkout_payment']);
+Route::get('checkout/payment',[PaymentController::class,'checkout_payment']);
 
 Route::get('checkout/payment', [PaymentController::class, 'checkout_payment']);
+Route::get('paypal/success-payment', [PaymentController::class, 'paypal_success_payment']);
 
 
 
+// SSLCOMMERZ Start
+Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
 
 
-
-// 63 number video dakci error solution 
+// 67 number video dakci error solution 
 // 0 m pojunto video dakci  

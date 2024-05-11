@@ -14,5 +14,24 @@ class order extends Model
     {
         return self::find($id);
     }
+    static public function getRecord()
+    {
+        $return = order::select('orders.*')
+               ->where('is_payment', '=', 1)
+               ->where('is_delete', '=', 0)
+               ->orderBy('id', 'desc')
+               ->paginate(30);
 
+               return $return;
+    }
+
+    public function getShipping()
+    {
+        return $this->belongsTo(ShippingCharge::class,'shipping_id');
+    }
+    
+    public function getItem()
+    {
+        return $this->hasMany(orderItem::class,'order_id');
+    }
 }

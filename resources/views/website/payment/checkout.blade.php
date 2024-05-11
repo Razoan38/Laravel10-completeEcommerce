@@ -5,6 +5,8 @@
 @endsection
 
 @section('style')
+
+
 @endsection
 @section('content')
 
@@ -75,12 +77,12 @@
 
 		                					<div class="col-sm-6">
 		                						<label>Phone *</label>
-		                						<input type="tel" name="phone" class="form-control" required>
+		                						<input type="tel" name="phone" id="phone" class="form-control" required>
 		                					</div><!-- End .col-sm-6 -->
 		                				</div><!-- End .row -->
 
 	                					<label>Email address *</label>
-	        							<input type="email" name="email" class="form-control" required>
+	        							<input type="email" name="email" id="email" class="form-control" required>
 
                                         @if(empty(Auth::check()))
 
@@ -190,18 +192,28 @@
 											</div>
 
 											<div class="custom-control custom-radio" style="margin-top: 0px">
-												<input type="radio" value="card" id="creditCard" name="payment_method" 
+												<input type="radio" value="2" id="creditCard" name="payment_method" 
 												class="custom-control-input" required>
 												<label class="custom-control-label" for="creditCard">Credit Card (Stripe)</label>
 											</div>
 
+											<div class="custom-control custom-radio" style="margin-top: 0px">
+												<input type="radio" value="card" id="Online" name="payment_method" 
+												class="custom-control-input" required>
+												<label class="custom-control-label" for="Online">Online </label>
+											</div>
+
 										</div>
 
-		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                        <hr class="mb-4">
+                                        <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
 		                					<span class="btn-text">Place Order</span>
 		                					<span class="btn-hover-text">Proceed to Checkout</span>
 		                				</button>
 										<br/> <br/>
+                                        
+
+		                				
 										<img src="{{asset('/')}}website/assets/images/payments-summary.png" alt="payments cards">
 		                			</div>
 		                		</aside>
@@ -349,4 +361,10 @@
 
 	// 	});
 </script>
-@endsection
+
+
+
+
+
+
+@endsection 

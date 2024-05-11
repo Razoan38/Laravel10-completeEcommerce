@@ -15,12 +15,15 @@ use App\Models\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use Stripe\Stripe;
 
 use function PHPUnit\Framework\returnSelf;
 
 class PaymentController extends Controller
 {
+
+    private $customer;
+
         public function checkout(Request $request)
         {
             
@@ -288,16 +291,84 @@ public function update_cart(Request $request)
         
                 }
 
-               else if($getOrder->payment_method == 'paypal')
+                elseif ($request->payment_method == 2)
                 {
-
+                    $sslPayment = new SslCommerzPaymentController();
+                    $sslPayment->payViaAjax($request, $this->customer);
                 }
+
+
+               else if($getOrder->payment_method == 'Online')
+                {
+                    $query = array();
+                    $query['business'] ="smrazoan01@gmail.com";
+                    $query['cmd'] ='_xclick';
+                    $query['item_name'] ='E-commerce';
+                    $query['no_shipping'] ='1';
+                    $query['item_number'] =$getOrder->id;
+                    $query['amount'] =$getOrder->total_amount;
+                    $query['currency_code'] ='USD';
+                    $query['cancel_ruturn'] =url('checkout');
+                    $query['ruturn'] =url('paypal/success-payment');
+
+
+                    $query_string = http_build_query($query);
+
+                    header('location: https://sandbox.sslcommerz.com/embed.min.js?' .$query_string);
+                    exit();
+                }
+                
+               else if($getOrder->payment_method == 'payoneer')
+                {
+               
+                    $query = array();
+                    $query['business'] ="smrazoan01@gmail.com";
+                    $query['cmd'] ='_xclick';
+                    $query['item_name'] ='E-commerce';
+                    $query['no_shipping'] ='1';
+                    $query['item_number'] =$getOrder->id;
+                    $query['amount'] =$getOrder->total_amount;
+                    $query['currency_code'] ='USD';
+                    $query['cancel_ruturn'] =url('checkout');
+                    $query['ruturn'] =url('paypal/success-payment');
+
+
+                    $query_string = http_build_query($query);
+
+                    header('location: https://www.sandbox.https://www.payoneer.com/bn/cgi-bin/webscr?' .$query_string);
+
+                    exit();
+                }
+
 
                else if($getOrder->payment_method == 'stripe')
                 {
+                    Stripe::setApiKey(env('STRIPE_SECRET'));
+                    $finalprice = $getOrder->total_amount * 100;
 
+                    $session = \Stripe\checkout\Session::create([
+                        'customer_email' => $getOrder->email,
+                        'payment_method_types' =>['card'],
+                        'line_items' =>[[
+                           'price_data' =>[
+
+                            'currency' =>'usd',
+                            'product_data' =>[
+                                'name' =>'E-Commerce',
+                            ],
+                            'unit_amount' =>intval($finalprice),
+                           ],
+                           'quantity' =>1,
+                        ]],
+                        'mode' => 'payment',
+                        'success_url' =>url('stripe/payment-success'),
+                        'cancel_url' =>url('checkout'),
+                    ]);
+
+                    dd($session);
                 }
-            }else
+            }
+            else
             {
                abort(404);
             }
@@ -308,6 +379,11 @@ public function update_cart(Request $request)
             abort(404);
          }
      }   
+
+    //  public function paypal_success_payment(Request $request)
+    //  {
+    //     dd($request->all());
+    //  }
 
    
 

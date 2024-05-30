@@ -8,6 +8,8 @@ use App\Models\Categories;
 use App\Models\color;
 use App\Models\Product;
 use App\Models\SubCategories;
+use App\Mail\OrderInvoiceMail;
+use Illuminate\Support\Facades\Mail;
 
 class ProductsController extends Controller
 {
@@ -149,3 +151,6 @@ class ProductsController extends Controller
 
      
 }
+
+
+

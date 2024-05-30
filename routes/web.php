@@ -46,10 +46,18 @@ Route::group(['middleware' =>'admin'],function(){
     Route::post('admin/admin/edit/{id}',[AdminController::class,'update'])->name('admin.update');
     Route::get('admin/admin/delate/{id}',[AdminController::class,'delate'])->name('admin.delate');
 
+    //Customer
+     Route::get('admin/customer/list',[AdminController::class,'customer_list'])->name('admin.customer.list');
+    // Route::get('admin/admin/add',[AdminController::class,'add'])->name('admin.add');
+    // Route::post('admin/admin/add',[AdminController::class,'insert']);
+    // Route::get('admin/admin/edit/{id}',[AdminController::class,'edit'])->name('admin.edit');
+    // Route::post('admin/admin/edit/{id}',[AdminController::class,'update'])->name('admin.update');
+    // Route::get('admin/admin/delate/{id}',[AdminController::class,'delate'])->name('admin.delate');
+
     // orders
     Route::get('admin/orders/list',[OrdersController::class,'list'])->name('admin.orders.list');
     Route::get('admin/orders/detail/{id}',[OrdersController::class,'order_detail'])->name('orders.detail');
-    // Route::post('admin/orders/add',[OrdersController::class,'insert']);
+    Route::get('admin/orders_status',[OrdersController::class,'orders_status']);
     // Route::get('admin/orders/edit/{id}',[OrdersController::class,'edit'])->name('orders.edit');
     // Route::post('admin/orders/edit/{id}',[OrdersController::class,'update'])->name('orders.update');
     // Route::get('admin/orders/delate/{id}',[OrdersController::class,'delate'])->name('orders.delate');
@@ -182,5 +190,5 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
 
-// 67 number video dakci error solution 
+// 71 number video dakci error solution 
 // 0 m pojunto video dakci  

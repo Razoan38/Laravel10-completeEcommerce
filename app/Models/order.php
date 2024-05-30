@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Request;
+// use Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request ;
 
 class order extends Model
 {

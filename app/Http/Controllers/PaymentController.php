@@ -202,6 +202,7 @@ public function update_cart(Request $request)
                 if (!empty($user_id)) {
                     $order->user_id =  trim($user_id);
                 }
+                $order->order_number =  trim($request->order_number);
                 $order->first_name =  trim($request->first_name);
                 $order->last_name =  trim($request->last_name);
                 $order->company_name =  trim($request->company_name);

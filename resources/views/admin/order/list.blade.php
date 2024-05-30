@@ -41,80 +41,80 @@ Order Page
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">ID</label>
-                              <input type="text" name="id" class="form-control" value="{{ Request::get('id') }}" placeholder="ID">
+                              <input type="text" name="id" class="form-control"valuee="{{ Request::get('id') }}" placeholder="ID">
                           </div>
                        </div>
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">First Name</label>
-                              <input type="text" name="first_name" class="form-control" value="{{ Request::get('first_name') }}" placeholder="First Name">
+                              <input type="text" name="first_name" class="form-control"valuee="{{ Request::get('first_name') }}" placeholder="First Name">
                           </div>
                        </div>
   
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Last Name</label>
-                              <input type="text" name="last_name" class="form-control" value="{{ Request::get('last_name') }}" placeholder="Last Name">
+                              <input type="text" name="last_name" class="form-control"valuee="{{ Request::get('last_name') }}" placeholder="Last Name">
                           </div>
                        </div>
   
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Email</label>
-                              <input type="text" name="email" class="form-control" value="{{ Request::get('email') }}" placeholder="Email">
+                              <input type="text" name="email" class="form-control"valuee="{{ Request::get('email') }}" placeholder="Email">
                           </div>
                        </div>
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Phone</label>
-                              <input type="text" name="phone" class="form-control" value="{{ Request::get('phone') }}" placeholder="Phone">
+                              <input type="text" name="phone" class="form-control"valuee="{{ Request::get('phone') }}" placeholder="Phone">
                           </div>
                        </div>
   
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Country</label>
-                              <input type="text" name="country" class="form-control" value="{{ Request::get('country') }}" placeholder="Country">
+                              <input type="text" name="country" class="form-control"valuee="{{ Request::get('country') }}" placeholder="Country">
                           </div>
                        </div>
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">State</label>
-                              <input type="text" name="state" class="form-control" value="{{ Request::get('state') }}" placeholder="State">
+                              <input type="text" name="state" class="form-control"valuee="{{ Request::get('state') }}" placeholder="State">
                           </div>
                        </div>
 
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">City</label>
-                              <input type="text" name="city" class="form-control" value="{{ Request::get('city') }}" placeholder=" City">
+                              <input type="text" name="city" class="form-control"valuee="{{ Request::get('city') }}" placeholder=" City">
                           </div>
                        </div>
 
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Discount Code</label>
-                              <input type="text" name="discount_code" class="form-control" value="{{ Request::get('discount_code') }}" placeholder=" Discount Code">
+                              <input type="text" name="discount_code" class="form-control"valuee="{{ Request::get('discount_code') }}" placeholder=" Discount Code">
                           </div>
                        </div>
 
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Pyment Method</label>
-                              <input type="text" name="payment_method" class="form-control" value="{{ Request::get('payment_method') }}" placeholder="Payment Method">
+                              <input type="text" name="payment_method" class="form-control"valuee="{{ Request::get('payment_method') }}" placeholder="Payment Method">
                           </div>
                        </div>
 
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">Form Date</label>
-                              <input type="date" name="form_date" class="form-control" value="{{ Request::get('form_date') }}" style="padding: 6px" placeholder="form_date">
+                              <input type="date" name="form_date" class="form-control"valuee="{{ Request::get('form_date') }}" style="padding: 6px" placeholder="form_date">
                           </div>
                        </div>
                        <div class="col-md-2">
                           <div class="form-group">
                              <label for="">To Date</label>
-                              <input type="date" name="to_date" class="form-control" value="{{ Request::get('to_date') }}" style="padding: 6px" placeholder="To Date">
+                              <input type="date" name="to_date" class="form-control"valuee="{{ Request::get('to_date') }}" style="padding: 6px" placeholder="To Date">
                           </div>
                        </div>
   
@@ -163,37 +163,51 @@ Order Page
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ( $getRecord as $valu )
+                      @foreach ( $getRecord as $value )
                         
                      
                       <tr>
-                        <td>{{ $valu->id }}</td>
-                        <td>{{ $valu->first_name }} {{ $valu->last_name }}</td>
-                        <td>{{ $valu->company_name }}</td>
-                        <td>{{ $valu->country }}</td>
-                        <td>{{ $valu->address_one }} {{ $valu->address_two }}</td>
-                        <td>{{ $valu->city }}</td>
-                        <td>{{ $valu->state }}</td>
-                        <td>{{ $valu->postcode }}</td>
-                        <td>{{ $valu->phone }}</td>
-                        <td>{{ $valu->email	 }}</td>
-                        <td>{{$valu->discount_code }}</td>
-                        <td>{{ number_format ($valu->discount_amount ,2) }}</td>
-                        <td>{{ number_format ($valu->shipping_amount,2) }}</td>
-                        <td style="text-transform: capitalize">{{$valu->payment_method }}</td>
-                        <td>{{ $valu->status	 }}</td>
-                        <td>{{ number_format ($valu->total_amount ,2) }}</td>
-                        <td>{{ date('d-m-y', strtotime($valu->created_at))}}</td>
+                        <td>{{ $value->id }}</td>
+                        <td>{{ $value->first_name }} {{ $value->last_name }}</td>
+                        <td>{{ $value->company_name }}</td>
+                        <td>{{ $value->country }}</td>
+                        <td>{{ $value->address_one }} {{ $value->address_two }}</td>
+                        <td>{{ $value->city }}</td>
+                        <td>{{ $value->state }}</td>
+                        <td>{{ $value->postcode }}</td>
+                        <td>{{ $value->phone }}</td>
+                        <td>{{ $value->email	 }}</td>
+                        <td>{{$value->discount_code }}</td>
+                        <td>{{ number_format ($value->discount_amount ,2) }}</td>
+                        <td>{{ number_format ($value->shipping_amount,2) }}</td>
+                        <td style="text-transform: capitalize">{{$value->payment_method }}</td>
+
+                          <td>
+                          <select name="order_status"  class="form-control ChangeStatus" id="{{ $value->id }}" style="width:150px;">
+                            <option {{ ($value->status == 0 ) ? 'selected' : ''}} value="0">Pending</option>
+                            <option {{ ($value->status == 1 ) ? 'selected' : ''}} value="1">Inporgress</option>
+                            <option {{ ($value->status == 2 ) ? 'selected' : ''}} value="2">Delivered</option>
+                            <option {{ ($value->status == 3 ) ? 'selected' : ''}} value="3">Completed</option>
+                            <option {{ ($value->status == 4 ) ? 'selected' : ''}} value="4">Cencelled</option>
+                          </select>
+      
+                          </td>
+
+                        <td>{{ number_format ($value->total_amount ,2) }}</td>
+                        <td>{{ date('d-m-y', strtotime($value->created_at))}}</td>
                         <td>
 
-                         <a href="{{ route('orders.detail',['id' => $valu->id ]) }}" class="btn btn-primary">Detail</a>
-                          {{-- <a href="{{ route('orders.delate',['id' => $valu->id ] ) }}" class="btn btn-danger">Delate</a> --}}
+                         <a href="{{ route('orders.detail',['id' => $value->id ]) }}" class="btn btn-primary">Detail</a>
+                          {{-- <a href="{{ route('orders.delate',['id' => $value->id ] ) }}" class="btn btn-danger">Delate</a> --}}
 
                     
                       </tr>
                       @endforeach
                     </tbody>
                   </table>
+                  <div class="" style="padding: 10px ; float: right;" >
+                    {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!} 
+                   </div>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -212,4 +226,58 @@ Order Page
 
 @section('script')
 <script src="{{asset('/')}}public/admin/assets/dist/js/pages/dashboard3.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+   $('body').delegate('.ChangeStatus' , 'change', function() {
+        var status = $(this).val();
+        var order_id = $(this).attr('id');
+
+        $.ajax({
+				type : "GET",
+				url  :  "{{ url('admin/orders_status') }}",
+				data :  {
+                  status    : status,
+                  order_id : order_id
+        },
+				dataType : "json",
+				success  : function(data) {
+             alert(data.message);
+				},
+				
+			});
+   });
+
+
+// $(document).ready(function() {
+//             $('body').on('change', '.ChangeStatus', function() {
+//                 var status = $(this).val();
+//                 var order_id = $(this).attr('id');
+
+//                 console.log("Status: " + status);
+//                 console.log("Order ID: " + order_id);
+
+//                 $.ajax({
+//                     type: "GET",
+//                     url: "{{ url('admin/orders_status') }}",
+//                     data: {
+//                         status: status,
+//                         order_id: order_id
+//                     },
+//                     dataType: "json",
+//                     success: function(data) {
+//                         console.log("Success response: ", data);
+//                         alert(data.message);
+//                     },
+//                     error: function(xhr, status, error) {
+//                         console.error("Error: ", error);
+//                         alert("An error occurred: " + error);
+//                     }
+//                 });
+//             });
+//         });
+
+
+</script>
 @endsection
